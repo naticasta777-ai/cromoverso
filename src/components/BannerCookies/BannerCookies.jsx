@@ -1,5 +1,5 @@
 import { useId } from "react";
-import Boton from "../Boton.jsx";
+import Boton from "../Boton/Boton.jsx";
 import "./BannerCookies.css";
 
 export default function BannerCookies({ textos, onAceptar, onRechazar }) {

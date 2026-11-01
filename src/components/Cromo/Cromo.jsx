@@ -1,4 +1,4 @@
-import Icono from "../Icono.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./Cromo.css";
 
 const CLASES_TEXTO = {

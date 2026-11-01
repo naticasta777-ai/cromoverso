@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { RUTAS } from "../../config/rutas.js";
 import AbanicoCromos from "../AbanicoCromos/AbanicoCromos.jsx";
-import Boton from "../Boton.jsx";
-import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./HeroCromoverso.css";
 
 export default function HeroCromoverso({ textos, heroes, rarezas }) {

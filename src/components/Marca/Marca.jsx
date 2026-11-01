@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { RUTAS } from "../../config/rutas.js";
-import Icono from "../Icono.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./Marca.css";
 
 export default function Marca({ nombre, className = "" }) {

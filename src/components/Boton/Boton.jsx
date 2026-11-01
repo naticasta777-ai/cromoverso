@@ -1,4 +1,4 @@
-import Icono from "./Icono.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./Boton.css";
 
 const TEXTO = { g: "cuerpo-m-fuerte", m: "cuerpo-p-fuerte", p: "detalle-nota-fuerte" };

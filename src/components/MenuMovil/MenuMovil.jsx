@@ -1,4 +1,4 @@
-import Icono from "../Icono.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./MenuMovil.css";
 
 export default function MenuMovil({ abierto, onAlternar, menuId, botonRef, textos }) {

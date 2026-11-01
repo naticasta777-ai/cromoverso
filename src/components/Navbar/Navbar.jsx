@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { RUTAS } from "../../config/rutas.js";
-import Boton from "../Boton.jsx";
-import Icono from "../Icono.jsx";
+import Boton from "../Boton/Boton.jsx";
+import Icono from "../Icono/Icono.jsx";
 import Marca from "../Marca/Marca.jsx";
 import MenuMovil from "../MenuMovil/MenuMovil.jsx";
 import SelectorIdioma from "../SelectorIdioma/SelectorIdioma.jsx";

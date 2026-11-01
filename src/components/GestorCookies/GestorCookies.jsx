@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useInterfaz, usePreferencias } from "../../context/PreferenciasContext.jsx";
 import BannerCookies from "../BannerCookies/BannerCookies.jsx";
-import Icono from "../Icono.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./GestorCookies.css";
 
 export default function GestorCookies() {

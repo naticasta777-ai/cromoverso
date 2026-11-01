@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { rutaCromo } from "../../config/rutas.js";
 import Cromo from "../Cromo/Cromo.jsx";
-import Icono from "../Icono.jsx";
+import Icono from "../Icono/Icono.jsx";
 import "./AbanicoCromos.css";
 
 const POSICIONES = ["izquierda", "centro", "derecha"];
