@@ -1,0 +1,17 @@
+.saltar-contenido {
+  position: absolute;
+  top: var(--espacio-2);
+  left: var(--espacio-2);
+  z-index: 100;
+  padding: var(--espacio-2) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: var(--marca-acento);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.saltar-contenido:focus {
+  color: var(--texto-principal);
+  transform: none;
+}

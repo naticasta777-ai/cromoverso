@@ -1,0 +1,27 @@
+.marca-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: inherit;
+  text-decoration: none;
+}
+.marca-home:hover {
+  color: inherit;
+}
+.marca-home__emblema {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--borde-grosor) solid var(--marca-borde, var(--borde-fuerte));
+  border-radius: 50%;
+  color: var(--marca-acento);
+  background: var(--marca-primario);
+}
+.marca-home__emblema .icono {
+  fill: currentColor;
+}
+.marca-home__nombre {
+  white-space: nowrap;
+}

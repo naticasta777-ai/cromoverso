@@ -1,0 +1,15 @@
+.error-cookies {
+  position: fixed;
+  z-index: 45;
+  inset-inline: var(--espacio-4);
+  bottom: var(--espacio-4);
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--estado-error);
+  border-radius: var(--radio-m);
+  color: var(--estado-error);
+  background: var(--estado-error-suave);
+}

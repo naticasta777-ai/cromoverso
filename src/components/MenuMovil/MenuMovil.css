@@ -1,0 +1,33 @@
+.boton-menu {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1.5px solid var(--borde-inverso);
+  border-radius: 50%;
+  color: var(--texto-inverso);
+  background: var(--fondo-inverso-2);
+  cursor: pointer;
+}
+.boton-menu:hover {
+  background: var(--marca-primario);
+}
+.boton-menu .icono {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+.navbar--movil-claro .boton-menu {
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+.navbar--movil-claro .boton-menu:hover {
+  background: var(--marca-primario-suave);
+}
+@media (min-width: 64rem) {
+  .boton-menu {
+    display: none;
+  }
+}

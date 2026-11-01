@@ -1,44 +1,26 @@
-import { useEffect, useState } from "react";
-import { useTextos } from "./hooks/useTextos.js";
-import Navbar from "./components/Navbar.jsx";
+import { Route, Routes } from "react-router-dom";
+import LayoutPublico from "./components/LayoutPublico/LayoutPublico.jsx";
+import Inicio from "./pages/Inicio.jsx";
 
-function leerSeccion() {
-    return window.location.hash.slice(1) || "inicio";
+// Marcadores provisionales: las vistas reales se construyen en S1-04 y en los sprints 2 y 3.
+function Marcador({ titulo }) {
+  return (
+    <LayoutPublico>
+      <div className="contenedor">
+        <h1 className="titular-h1">{titulo}</h1>
+      </div>
+    </LayoutPublico>
+  );
 }
 
-function App() {
-    const [idioma, setIdioma] = useState("es");
-    const [activo, setActivo] = useState(leerSeccion);
-    const [textoGrande, setTextoGrande] = useState(false);
-    const datos = useTextos(idioma);
-
-    useEffect(() => {
-        const actualizar = () => setActivo(leerSeccion());
-        window.addEventListener("hashchange", actualizar);
-        return () => window.removeEventListener("hashchange", actualizar);
-    }, []);
-
-    useEffect(() => {
-        document.documentElement.lang = idioma === "es" ? "es-CO" : "en";
-    }, [idioma]);
-
-    useEffect(() => {
-        document.documentElement.style.fontSize = textoGrande ? "112%" : "";
-        return () => {
-            document.documentElement.style.fontSize = "";
-        };
-    }, [textoGrande]);
-
-    return (
-        <Navbar
-            {...datos}
-            idioma={idioma}
-            cambiarIdioma={setIdioma}
-            activo={activo}
-            textoGrande={textoGrande}
-            alternarTexto={() => setTextoGrande((valor) => !valor)}
-        />
-    );
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Inicio />} />
+      <Route path="/mundos/:id" element={<Marcador titulo="Catálogo" />} />
+      <Route path="/cromos/:id" element={<Marcador titulo="Detalle" />} />
+      <Route path="/iniciar-sesion" element={<Marcador titulo="Iniciar sesión" />} />
+      <Route path="/crear-cuenta" element={<Marcador titulo="Crear cuenta" />} />
+    </Routes>
+  );
 }
-
-export default App;

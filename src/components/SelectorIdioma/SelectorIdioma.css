@@ -1,0 +1,22 @@
+.idiomas-home {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+}
+.idiomas-home button {
+  min-width: 2.75rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: transparent;
+  cursor: pointer;
+}
+.idiomas-home button[aria-pressed="true"] {
+  color: var(--texto-inverso);
+  background: var(--marca-primario);
+}

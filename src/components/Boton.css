@@ -1,0 +1,59 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  box-shadow: var(--sombra-pop-pequena);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease-out,
+    box-shadow 160ms ease-out;
+}
+.boton:active {
+  transition-duration: 80ms;
+}
+
+.boton--g { padding: var(--espacio-4) 1.75rem; }
+.boton--m { padding: var(--espacio-3) 1.375rem; }
+.boton--p { padding: var(--espacio-2) var(--espacio-4); }
+
+.boton svg { flex-shrink: 0; width: 1.25rem; height: 1.25rem; }
+.boton--m svg { width: 1.125rem; height: 1.125rem; }
+.boton--p svg { width: 1rem; height: 1rem; }
+
+.boton--primario { color: var(--texto-inverso); background: var(--marca-primario); }
+.boton--acento { color: var(--texto-principal); background: var(--marca-acento); }
+.boton--secundario { color: var(--texto-principal); background: var(--fondo-superficie); }
+.boton--fantasma {
+  color: var(--texto-marca);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Hover (el color se repite para ganarle al a:hover de global.css) */
+.boton--primario:hover { color: var(--texto-inverso); background: var(--marca-primario-hover); }
+.boton--acento:hover { color: var(--texto-principal); }
+.boton--secundario:hover { color: var(--texto-principal); background: var(--fondo-sutil); }
+.boton--fantasma:hover { color: var(--texto-marca); background: var(--marca-primario-suave); }
+.boton:not(.boton--fantasma):hover { box-shadow: var(--sombra-pop); }
+
+/* Presionado */
+.boton:not(.boton--fantasma):active { box-shadow: none; }
+.boton--primario:active { background: var(--marca-primario-hover); }
+.boton--secundario:active { background: var(--fondo-sutil); }
+.boton--fantasma:active { background: var(--marca-primario-suave); }
+
+/* El Figma no trae este estado: es decisión mía */
+.boton:disabled,
+.boton[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boton { transition: none; }
+}

@@ -1,0 +1,85 @@
+.pie {
+  --marca-borde: var(--texto-inverso);
+  padding: 2.5rem 0 var(--espacio-6);
+  color: var(--texto-inverso);
+  background: var(--fondo-inverso);
+}
+.pie__interior {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+.pie__columnas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+.pie__marca {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+.pie__lema {
+  margin: 0;
+  max-width: 46.875rem;
+  color: var(--texto-inverso-suave);
+}
+.pie__enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-5) var(--espacio-6);
+}
+.pie__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.pie__grupo h2 {
+  margin: 0;
+  color: var(--marca-acento);
+}
+.pie__grupo ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pie__enlace {
+  padding: 0;
+  border: 0;
+  color: var(--texto-inverso);
+  background: none;
+  text-align: left;
+  text-decoration: none;
+}
+a.pie__enlace:hover,
+button.pie__enlace:hover {
+  color: var(--texto-inverso);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pie__creditos {
+  margin: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--borde-inverso);
+  color: var(--texto-inverso-suave);
+}
+
+@media (min-width: 64rem) {
+  .pie {
+    padding-top: 3.5rem;
+  }
+  .pie__interior {
+    gap: 2.5rem;
+  }
+  .pie__columnas {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pie__enlaces {
+    flex-wrap: nowrap;
+    gap: 4.5rem;
+  }
+}

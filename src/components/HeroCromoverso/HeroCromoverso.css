@@ -1,0 +1,90 @@
+.hero-cromoverso {
+  position: relative;
+  overflow: hidden;
+  color: var(--texto-inverso);
+  background: var(--fondo-inverso);
+}
+.hero-cromoverso::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 26%;
+  background: color-mix(in srgb, var(--marca-primario) 30%, var(--fondo-inverso));
+  clip-path: polygon(
+    4% 0, 35% 6%, 31% 0, 100% 0, 100% 100%, 94% 93%, 96% 100%, 37% 100%, 38% 93%,
+    32% 100%, 23% 100%, 30% 80%, 0 100%, 25% 64%, 3% 68%, 22% 43%, 0 34%, 22% 24%
+  );
+}
+.hero-cromoverso__interior {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-block: var(--espacio-2) 1.75rem;
+}
+.hero-cromoverso__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-4);
+}
+.hero-cromoverso__titulo,
+.hero-cromoverso__descripcion,
+.hero-cromoverso__nota {
+  margin: 0;
+}
+.hero-cromoverso__descripcion {
+  color: var(--texto-inverso-suave);
+}
+.hero-cromoverso__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  align-self: stretch;
+}
+.hero-cromoverso__acciones .boton {
+  width: 100%;
+}
+.hero-cromoverso__nota {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .hero-cromoverso__interior {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: 2.5rem;
+    min-height: 34.875rem;
+    padding-block: 3.5rem 4.5rem;
+  }
+  .hero-cromoverso__titulo {
+    font-size: 3.5rem;
+    line-height: 3.875rem;
+    letter-spacing: -1.5px;
+  }
+  .hero-cromoverso__linea {
+    display: block;
+  }
+  .hero-cromoverso__descripcion {
+    display: none;
+  }
+  .hero-cromoverso__acciones {
+    flex-direction: row;
+    gap: var(--espacio-3);
+    align-self: auto;
+  }
+  .hero-cromoverso__acciones .boton {
+    width: auto;
+  }
+  .hero-cromoverso__nota {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    color: var(--texto-inverso-suave);
+  }
+  .hero-cromoverso__nota .icono {
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--marca-acento);
+  }
+}

@@ -1,0 +1,56 @@
+.abanico {
+  display: none;
+  container-type: inline-size;
+  position: relative;
+  width: min(100%, 35rem);
+  aspect-ratio: 560 / 430;
+  margin-inline: auto;
+}
+@media (min-width: 40rem) {
+  .abanico {
+    display: block;
+  }
+}
+.abanico__carta {
+  position: absolute;
+  display: block;
+  width: 42.86cqw;
+  color: inherit;
+  text-decoration: none;
+}
+.abanico__carta--izquierda {
+  left: 0;
+  top: 5.8cqw;
+  rotate: -9deg;
+}
+.abanico__carta--derecha {
+  left: 44.2cqw;
+  top: 7.14cqw;
+  rotate: 9deg;
+}
+.abanico__carta--centro {
+  left: 28.57cqw;
+  top: 5.36cqw;
+  z-index: 2;
+}
+.abanico__sello {
+  position: absolute;
+  top: -4.1cqw;
+  left: 21.4cqw;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem var(--espacio-3);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: var(--marca-acento);
+  box-shadow: var(--sombra-pop-pequena);
+  white-space: nowrap;
+  rotate: -6deg;
+}
+.abanico__sello .icono {
+  width: 1rem;
+  height: 1rem;
+}
