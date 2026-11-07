@@ -1,7 +1,11 @@
 import Icono from "../Icono/Icono.jsx";
 import "./Boton.css";
 
-const TEXTO = { g: "cuerpo-m-fuerte", m: "cuerpo-p-fuerte", p: "detalle-nota-fuerte" };
+const TEXTO = {
+  g: "cuerpo-m-fuerte",
+  m: "cuerpo-p-fuerte",
+  p: "detalle-nota-fuerte",
+};
 
 export default function Boton({
   como: Etiqueta = "button",
@@ -13,7 +17,13 @@ export default function Boton({
   ...resto
 }) {
   const propsBoton = Etiqueta === "button" ? { type: "button" } : {};
-  const clases = ["boton", `boton--${variante}`, `boton--${tamano}`, TEXTO[tamano], className]
+  const clases = [
+    "boton",
+    `boton--${variante}`,
+    `boton--${tamano}`,
+    TEXTO[tamano],
+    className,
+  ]
     .filter(Boolean)
     .join(" ");
 

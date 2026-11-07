@@ -1,1 +1,1 @@
-export const proyecto = { id: "cromoverso", nombre: "Cromoverso" };
+export const proyecto = { id: "cromoverso" };

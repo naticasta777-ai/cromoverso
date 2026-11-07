@@ -1,0 +1,53 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.campo__etiqueta {
+  color: var(--texto-principal);
+}
+.campo__caja {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-m);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+.campo__caja::placeholder {
+  color: var(--texto-terciario);
+  opacity: 1;
+}
+.campo__caja:hover {
+  border-color: var(--marca-primario);
+}
+.campo__caja:focus-visible {
+  outline: none;
+  border-width: 2.5px;
+  border-color: var(--marca-primario);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--marca-primario) 25%, transparent);
+}
+.campo__caja[aria-invalid="true"] {
+  border-width: 2.5px;
+  border-color: var(--estado-error);
+}
+.campo__caja:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--fondo-sutil);
+}
+.campo__ayuda {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--texto-secundario);
+}
+.campo__ayuda--error {
+  color: var(--estado-error);
+}
+.campo__ayuda .icono {
+  width: 0.875rem;
+  height: 0.875rem;
+}

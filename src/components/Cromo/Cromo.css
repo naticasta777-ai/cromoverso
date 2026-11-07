@@ -1,22 +1,35 @@
-/* Todo escala con el ancho de la carta (cqw): sirve para G, M, P y móvil. */
+/* Todo escala con el ancho de la carta (cqw): sirve para los tamaños G, M y P. */
 .cromo {
   --borde-cromo: 2.5px;
   --borde-arte: 2px;
   --sombra-cromo: var(--sombra-pop);
+  --sombra-hover: 8px 8px 0 0 var(--borde-fuerte);
+  --alto-arte: 108.33cqw;
   --color-rareza: var(--rareza-comun);
   container-type: inline-size;
   position: relative;
   width: 100%;
   aspect-ratio: 5 / 7;
 }
+.cromo--g {
+  --alto-arte: 112.5cqw;
+}
 .cromo--p {
   --borde-cromo: 1.5px;
   --borde-arte: 1.5px;
   --sombra-cromo: var(--sombra-pop-pequena);
+  --sombra-hover: 6px 6px 0 0 var(--borde-fuerte);
+  --alto-arte: 118.1cqw;
 }
-.cromo--rara { --color-rareza: var(--rareza-rara); }
-.cromo--epica { --color-rareza: var(--rareza-epica); }
-.cromo--legendaria { --color-rareza: var(--rareza-legendaria); }
+.cromo--rara {
+  --color-rareza: var(--rareza-rara);
+}
+.cromo--epica {
+  --color-rareza: var(--rareza-epica);
+}
+.cromo--legendaria {
+  --color-rareza: var(--rareza-legendaria);
+}
 
 .cromo__carta {
   position: absolute;
@@ -26,16 +39,34 @@
   border-radius: 7.5cqw;
   background: var(--fondo-superficie);
   box-shadow: var(--sombra-cromo);
+  transition:
+    border-color 160ms ease-out,
+    box-shadow 160ms ease-out;
+}
+.cromo-enlace:hover .cromo__carta,
+.cromo-enlace:focus-visible .cromo__carta {
+  border-color: var(--marca-primario);
+  box-shadow: var(--sombra-hover);
+}
+.cromo-enlace {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.cromo-enlace:hover {
+  color: inherit;
 }
 
 .cromo__arte {
   position: absolute;
-  inset: 3.33cqw 3.33cqw auto;
-  height: 112.5cqw;
+  top: 3.33cqw;
+  left: 3.33cqw;
+  right: 3.33cqw;
+  height: var(--alto-arte);
   overflow: hidden;
   border: var(--borde-arte) solid var(--borde-fuerte);
   border-radius: 5cqw;
-  background: var(--cromo-color);
+  background: var(--cromo-color, var(--mundo-neon));
 }
 .cromo__rayos {
   position: absolute;
@@ -49,7 +80,7 @@
 .cromo__halo {
   position: absolute;
   left: 14cqw;
-  top: 17.43cqw;
+  bottom: 29.5cqw;
   width: 65.33cqw;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -58,7 +89,7 @@
 .cromo__hombros {
   position: absolute;
   left: 15.87cqw;
-  top: 74.67cqw;
+  bottom: -1.2cqw;
   width: 61.6cqw;
   height: 38.67cqw;
   border-radius: 25.87cqw 25.87cqw 0 0;
@@ -67,7 +98,7 @@
 .cromo__cabeza {
   position: absolute;
   left: 32.67cqw;
-  top: 49.47cqw;
+  bottom: 34.6cqw;
   width: 28cqw;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -76,7 +107,7 @@
 .cromo__antifaz {
   position: absolute;
   left: 34.63cqw;
-  top: 59.55cqw;
+  bottom: 46.5cqw;
   width: 24.08cqw;
   height: 6.16cqw;
   border-radius: 3.08cqw;
@@ -85,7 +116,7 @@
 .cromo__emblema {
   position: absolute;
   left: 39.67cqw;
-  top: 83.18cqw;
+  bottom: 15.1cqw;
   width: 14cqw;
   aspect-ratio: 1;
   color: var(--marca-acento);
@@ -123,25 +154,26 @@
 .cromo__rareza {
   position: absolute;
   top: 3.33cqw;
-  right: 3.33cqw;
+  left: 78.33cqw;
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 11.2cqw;
-  height: 13.8cqw;
+  width: 8.5cqw;
+  height: 11.67cqw;
+  min-width: 1.1em;
   border: var(--borde-arte) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
   color: var(--color-rareza);
   background: var(--fondo-superficie);
 }
 .cromo__rareza .icono {
-  width: 7.5cqw;
-  height: 7.5cqw;
+  width: 7cqw;
+  height: 7cqw;
 }
 
 .cromo__pie {
   position: absolute;
-  top: 118.75cqw;
+  top: calc(3.33cqw + var(--alto-arte) + 2.9cqw);
   left: 3.33cqw;
   right: 3.33cqw;
   display: flex;
@@ -150,17 +182,17 @@
   min-width: 0;
   padding-inline: 1.67cqw;
 }
-.cromo__nombre {
+.cromo__nombre,
+.cromo__detalle {
   overflow: hidden;
-  color: var(--texto-principal);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.cromo__nombre {
+  color: var(--texto-principal);
+}
 .cromo__detalle {
-  overflow: hidden;
   color: var(--texto-secundario);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .cromo--p .cromo__detalle {
   display: none;

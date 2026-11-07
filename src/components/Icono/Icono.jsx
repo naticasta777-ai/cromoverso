@@ -1,23 +1,30 @@
-import Estrella from "../assets/icons/estrella.svg?react";
-import Buscar from "../assets/icons/buscar.svg?react";
-import Idioma from "../assets/icons/globo.svg?react";
-import Chevron from "../assets/icons/chevronAbajo.svg?react";
-import Accesibilidad from "../assets/icons/accesibilidad.svg?react";
-import Menu from "../assets/icons/menu.svg?react";
-import Cerrar from "../assets/icons/cerrar.svg?react";
+// Carga todos los SVG de assets/icons. El nombre del archivo (sin mayúsculas)
+// es el nombre del ícono: <Icono nombre="chevronAbajo" />.
+const modulos = import.meta.glob("../../assets/icons/*.svg", {
+  eager: true,
+  query: "?react",
+  import: "default",
+});
 
-const ICONOS = {
-    estrella: Estrella,
-    buscar: Buscar,
-    idioma: Idioma,
-    chevron: Chevron,
-    accesibilidad: Accesibilidad,
-    menu: Menu,
-    cerrar: Cerrar,
-};
+const ICONOS = Object.fromEntries(
+  Object.entries(modulos).map(([ruta, Componente]) => [
+    ruta.split("/").pop().replace(".svg", "").toLowerCase(),
+    Componente,
+  ]),
+);
 
-export default function Icono({ nombre, tamano = 20 }) {
-    const Componente = ICONOS[nombre];
-    if (!Componente) return null;
-    return <Componente width={tamano} height={tamano} aria-hidden="true" focusable="false" />;
+export function existeIcono(nombre) {
+  return Boolean(nombre) && nombre.toLowerCase() in ICONOS;
+}
+
+export default function Icono({ nombre, className = "" }) {
+  const Componente = ICONOS[nombre?.toLowerCase()];
+  if (!Componente) return null;
+  return (
+    <Componente
+      className={`icono ${className}`.trim()}
+      aria-hidden="true"
+      focusable="false"
+    />
+  );
 }

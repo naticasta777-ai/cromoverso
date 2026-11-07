@@ -11,7 +11,7 @@ function validarTextos(datos) {
     "navbar.logo.texto": nav?.logo?.texto,
     "navbar.logo.aria": nav?.logo?.aria,
     ...Object.fromEntries(
-      CLAVES_MENU.map((c) => [`navbar.enlaces.${c}`, nav?.enlaces?.[c]])
+      CLAVES_MENU.map((c) => [`navbar.enlaces.${c}`, nav?.enlaces?.[c]]),
     ),
     "navbar.buscador.placeholder": nav?.buscador?.placeholder,
     "navbar.botones.ingresar": nav?.botones?.ingresar,
@@ -47,7 +47,7 @@ export function useTextos(idioma) {
       try {
         const respuesta = await fetch(
           `${API}?idioma=${idioma}&seccion=${SECCIONES}`,
-          { signal: controlador.signal }
+          { signal: controlador.signal },
         );
         if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
         const datos = await respuesta.json();

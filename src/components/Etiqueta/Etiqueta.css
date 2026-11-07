@@ -1,0 +1,36 @@
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--espacio-1) 0.625rem;
+  border-radius: var(--radio-pildora);
+}
+
+.etiqueta--neutro {
+  color: var(--texto-secundario);
+  background: var(--fondo-sutil);
+}
+
+.etiqueta--marca {
+  color: var(--texto-marca);
+  background: var(--marca-primario-suave);
+}
+
+.etiqueta--exito {
+  color: var(--estado-exito);
+  background: var(--estado-exito-suave);
+}
+
+.etiqueta--alerta {
+  color: var(--estado-alerta);
+  background: var(--estado-alerta-suave);
+}
+
+.etiqueta--error {
+  color: var(--estado-error);
+  background: var(--estado-error-suave);
+}
+
+.etiqueta--info {
+  color: var(--estado-info);
+  background: var(--estado-info-suave);
+}

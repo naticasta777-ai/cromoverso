@@ -1,5 +1,6 @@
 /* Tokens de diseño de Cromoverso, exportados del archivo de Figma. */
 /* Nombres iguales a las variables de Figma: "fondo/pagina" se usa como var(--fondo-pagina). */
+/* Los estilos de texto usan rem (mismo tamaño que en Figma a 16 px) para que "Tamaño del texto" funcione. */
 
 :root {
   /* Color */
@@ -64,8 +65,8 @@
   --espacio-8: 64px;
   --borde-grosor: 2px;
   /* Familias tipográficas (Google Fonts) */
-  --fuente-unbounded: 'Unbounded', system-ui, sans-serif;
-  --fuente-rubik: 'Rubik', system-ui, sans-serif;
+  --fuente-unbounded: "Unbounded", system-ui, sans-serif;
+  --fuente-rubik: "Rubik", system-ui, sans-serif;
   /* Sombras */
   --sombra-pop: 4px 4px 0px 0px #1a1033;
   --sombra-pop-pequena: 2px 2px 0px 0px #1a1033;
@@ -74,23 +75,149 @@
 }
 
 /* Estilos de texto de Figma como clases. */
-.titular-gigante { font-family: var(--fuente-unbounded); font-weight: 900; font-size: 88px; line-height: 92px; letter-spacing: -2px; }
-.titular-display { font-family: var(--fuente-unbounded); font-weight: 700; font-size: 56px; line-height: 62px; letter-spacing: -1.5px; }
-.titular-h1 { font-family: var(--fuente-unbounded); font-weight: 700; font-size: 40px; line-height: 46px; letter-spacing: -1px; }
-.titular-h2 { font-family: var(--fuente-unbounded); font-weight: 600; font-size: 28px; line-height: 34px; letter-spacing: -0.5px; }
-.titular-h3 { font-family: var(--fuente-unbounded); font-weight: 600; font-size: 20px; line-height: 26px; }
-.titular-h4 { font-family: var(--fuente-rubik); font-weight: 700; font-size: 16px; line-height: 22px; }
-.dato-cifra { font-family: var(--fuente-unbounded); font-weight: 700; font-size: 32px; line-height: 36px; letter-spacing: -0.5px; }
-.dato-numero-de-cromo { font-family: var(--fuente-unbounded); font-weight: 700; font-size: 14px; line-height: 16px; }
-.cuerpo-g { font-family: var(--fuente-rubik); font-weight: 400; font-size: 18px; line-height: 28px; }
-.cuerpo-m { font-family: var(--fuente-rubik); font-weight: 400; font-size: 16px; line-height: 24px; }
-.cuerpo-m-fuerte { font-family: var(--fuente-rubik); font-weight: 600; font-size: 16px; line-height: 24px; }
-.cuerpo-p { font-family: var(--fuente-rubik); font-weight: 400; font-size: 14px; line-height: 20px; }
-.cuerpo-p-fuerte { font-family: var(--fuente-rubik); font-weight: 600; font-size: 14px; line-height: 20px; }
-.detalle-nota { font-family: var(--fuente-rubik); font-weight: 400; font-size: 12px; line-height: 16px; }
-.detalle-nota-fuerte { font-family: var(--fuente-rubik); font-weight: 600; font-size: 12px; line-height: 16px; }
-.detalle-etiqueta { font-family: var(--fuente-rubik); font-weight: 700; font-size: 11px; line-height: 14px; letter-spacing: 0.060em; text-transform: uppercase; }
-.cromo-nombre-g { font-family: var(--fuente-unbounded); font-weight: 600; font-size: 17px; line-height: 22px; }
-.cromo-nombre-m { font-family: var(--fuente-unbounded); font-weight: 600; font-size: 13px; line-height: 17px; }
-.cromo-nombre-p { font-family: var(--fuente-unbounded); font-weight: 600; font-size: 10px; line-height: 13px; }
-.cromo-numero-p { font-family: var(--fuente-unbounded); font-weight: 700; font-size: 9px; line-height: 11px; }
+.titular-gigante {
+  font-family: var(--fuente-unbounded);
+  font-weight: 900;
+  font-size: 5.5rem;
+  line-height: 5.75rem;
+  letter-spacing: -2px;
+}
+
+.titular-display {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 3.875rem;
+  letter-spacing: -1.5px;
+}
+
+.titular-h1 {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 2.875rem;
+  letter-spacing: -1px;
+}
+
+.titular-h2 {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  letter-spacing: -0.5px;
+}
+
+.titular-h3 {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.625rem;
+}
+
+.titular-h4 {
+  font-family: var(--fuente-rubik);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.375rem;
+}
+
+.dato-cifra {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2.25rem;
+  letter-spacing: -0.5px;
+}
+
+.dato-numero-de-cromo {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1rem;
+}
+
+.cuerpo-g {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.cuerpo-m {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.cuerpo-m-fuerte {
+  font-family: var(--fuente-rubik);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.cuerpo-p {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.cuerpo-p-fuerte {
+  font-family: var(--fuente-rubik);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.detalle-nota {
+  font-family: var(--fuente-rubik);
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.detalle-nota-fuerte {
+  font-family: var(--fuente-rubik);
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.detalle-etiqueta {
+  font-family: var(--fuente-rubik);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  line-height: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cromo-nombre-g {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.375rem;
+}
+
+.cromo-nombre-m {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.0625rem;
+}
+
+.cromo-nombre-p {
+  font-family: var(--fuente-unbounded);
+  font-weight: 600;
+  font-size: 0.625rem;
+  line-height: 0.8125rem;
+}
+
+.cromo-numero-p {
+  font-family: var(--fuente-unbounded);
+  font-weight: 700;
+  font-size: 0.5625rem;
+  line-height: 0.6875rem;
+}

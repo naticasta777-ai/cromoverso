@@ -1,0 +1,88 @@
+.seccion-mundos {
+  padding-block: var(--espacio-5) var(--espacio-2);
+}
+.seccion-mundos__interior {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.seccion-mundos__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+}
+.seccion-mundos__subtitulo {
+  display: none;
+  margin-top: var(--espacio-1);
+  color: var(--texto-secundario);
+}
+.seccion-mundos__ver {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  color: var(--texto-marca);
+  text-decoration: none;
+}
+.seccion-mundos__ver .icono {
+  order: 1;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Móvil: carrusel desplazable */
+.seccion-mundos__lista {
+  display: flex;
+  gap: var(--espacio-3);
+  margin-inline: calc(var(--espacio-4) * -1);
+  padding: var(--espacio-1) var(--espacio-4) 0.625rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+.seccion-mundos__lista > li {
+  flex: none;
+  width: 9.75rem;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 64rem) {
+  .seccion-mundos {
+    padding-block: 3.5rem var(--espacio-6);
+  }
+  .seccion-mundos__interior {
+    gap: var(--espacio-5);
+  }
+  .seccion-mundos__subtitulo {
+    display: block;
+  }
+  .seccion-mundos__ver {
+    gap: var(--espacio-2);
+    padding: var(--espacio-3) 1.375rem;
+    border-radius: var(--radio-pildora);
+  }
+  .seccion-mundos__ver:hover {
+    background: var(--marca-primario-suave);
+  }
+  .seccion-mundos__ver .icono {
+    order: -1;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .seccion-mundos__lista {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espacio-4);
+    margin: 0;
+    padding: 0 var(--espacio-1) var(--espacio-1) 0;
+    overflow: visible;
+  }
+  .seccion-mundos__lista > li {
+    width: auto;
+  }
+}
+@media (min-width: 80rem) {
+  .seccion-mundos__lista {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,29 @@
+/* Modos que activa el panel de accesibilidad (clases en <html>). */
+
+html.alto-contraste {
+  --texto-secundario: var(--texto-principal);
+  --texto-terciario: var(--texto-principal);
+  --texto-inverso-suave: var(--texto-inverso);
+  --borde-sutil: var(--borde-fuerte);
+  --borde-inverso: var(--texto-inverso);
+  --fondo-sutil: var(--fondo-superficie);
+}
+
+html.reducir-movimiento *,
+html.reducir-movimiento *::before,
+html.reducir-movimiento *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+html.subrayar-enlaces a:not(.boton) {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+html.fuente-facil * {
+  letter-spacing: 0.05em;
+  word-spacing: 0.12em;
+  text-transform: none;
+}

@@ -1,0 +1,7 @@
+.tarjeta {
+  padding: var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-tarjeta);
+  background: var(--tarjeta-fondo, var(--fondo-superficie));
+  box-shadow: var(--sombra-pop);
+}

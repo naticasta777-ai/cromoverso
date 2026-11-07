@@ -1,5 +1,11 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { interfaz } from "../data/interfaz.js";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { borrarCookie, guardarCookie, leerCookie } from "../utils/cookies.js";
 
 const PreferenciasContext = createContext(null);
@@ -25,6 +31,7 @@ export function PreferenciasProvider({ children }) {
 
   const cambiarIdioma = useCallback((valor) => {
     setIdioma(valor);
+    // El idioma solo se recuerda si la persona aceptó las cookies.
     if (leerConsentimiento() === "aceptado") guardarCookie("idioma", valor);
   }, []);
 
@@ -46,19 +53,23 @@ export function PreferenciasProvider({ children }) {
   );
 
   const valor = useMemo(
-    () => ({ idioma, cambiarIdioma, consentimiento, guardarConsentimiento, error }),
+    () => ({
+      idioma,
+      cambiarIdioma,
+      consentimiento,
+      guardarConsentimiento,
+      error,
+    }),
     [idioma, cambiarIdioma, consentimiento, guardarConsentimiento, error],
   );
 
-  return <PreferenciasContext.Provider value={valor}>{children}</PreferenciasContext.Provider>;
+  return (
+    <PreferenciasContext.Provider value={valor}>
+      {children}
+    </PreferenciasContext.Provider>
+  );
 }
 
 export function usePreferencias() {
   return useContext(PreferenciasContext);
-}
-
-// Único punto que cambia en S1-05: los textos pasarán a venir de GET /textos.
-export function useInterfaz() {
-  const { idioma } = usePreferencias();
-  return interfaz[idioma];
 }

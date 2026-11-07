@@ -24,10 +24,12 @@ export const interfaz = {
     aceptar: "Aceptar",
     rechazar: "Rechazar",
     guardado: "Tu elección quedó guardada.",
-    errorCookies: "No pudimos guardar tu elección. Revisa si tu navegador bloquea las cookies.",
+    errorCookies:
+      "No pudimos guardar tu elección. Revisa si tu navegador bloquea las cookies.",
     heroLinea1: "Seis mundos. 120 héroes.",
     heroLinea2: "Un álbum tuyo.",
-    heroDescripcion: "Explora cada mundo y conoce a sus héroes. Crea tu cuenta gratis con tu correo.",
+    heroDescripcion:
+      "Explora cada mundo y conoce a sus héroes. Crea tu cuenta gratis con tu correo.",
     crearGratis: "Crear cuenta gratis",
     explorar: "Explorar los mundos",
     heroNota: "Crea tu cuenta con tu correo y empieza tu colección.",
@@ -59,10 +61,12 @@ export const interfaz = {
     aceptar: "Accept",
     rechazar: "Decline",
     guardado: "Your choice was saved.",
-    errorCookies: "We could not save your choice. Check whether your browser blocks cookies.",
+    errorCookies:
+      "We could not save your choice. Check whether your browser blocks cookies.",
     heroLinea1: "Six worlds. 120 heroes.",
     heroLinea2: "One album of your own.",
-    heroDescripcion: "Explore each world and meet its heroes. Sign up free with your email.",
+    heroDescripcion:
+      "Explore each world and meet its heroes. Sign up free with your email.",
     crearGratis: "Sign up free",
     explorar: "Explore the worlds",
     heroNota: "Sign up with your email and start your collection.",

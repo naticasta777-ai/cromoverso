@@ -1,0 +1,26 @@
+.etiqueta-rareza {
+  --color-rareza: var(--rareza-comun);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: var(--espacio-1) 0.625rem;
+  border: 1.5px solid var(--color-rareza);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+.etiqueta-rareza--rara {
+  --color-rareza: var(--rareza-rara);
+}
+.etiqueta-rareza--epica {
+  --color-rareza: var(--rareza-epica);
+}
+.etiqueta-rareza--legendaria {
+  --color-rareza: var(--rareza-legendaria);
+  background: var(--rareza-legendaria-suave);
+}
+.etiqueta-rareza .icono {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--color-rareza);
+}

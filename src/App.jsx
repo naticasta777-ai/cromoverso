@@ -1,26 +1,34 @@
-import { Route, Routes } from "react-router-dom";
-import LayoutPublico from "./components/LayoutPublico/LayoutPublico.jsx";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import GestorCookies from "./components/GestorCookies/GestorCookies.jsx";
+import PanelAccesibilidad from "./components/PanelAccesibilidad/PanelAccesibilidad.jsx";
+import { RUTAS } from "./config/rutas.js";
+import CatalogoMundo from "./pages/CatalogoMundo.jsx";
 import Inicio from "./pages/Inicio.jsx";
-
-// Marcadores provisionales: las vistas reales se construyen en S1-04 y en los sprints 2 y 3.
-function Marcador({ titulo }) {
-  return (
-    <LayoutPublico>
-      <div className="contenedor">
-        <h1 className="titular-h1">{titulo}</h1>
-      </div>
-    </LayoutPublico>
-  );
-}
+import Marcador from "./pages/Marcador.jsx";
+import Mundos from "./pages/Mundos.jsx";
+import NoEncontrado from "./pages/NoEncontrado.jsx";
 
 export default function App() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+
   return (
-    <Routes>
-      <Route path="/" element={<Inicio />} />
-      <Route path="/mundos/:id" element={<Marcador titulo="Catálogo" />} />
-      <Route path="/cromos/:id" element={<Marcador titulo="Detalle" />} />
-      <Route path="/iniciar-sesion" element={<Marcador titulo="Iniciar sesión" />} />
-      <Route path="/crear-cuenta" element={<Marcador titulo="Crear cuenta" />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path={RUTAS.inicio} element={<Inicio />} />
+        <Route path={RUTAS.mundos} element={<Mundos />} />
+        <Route path="/mundos/:id" element={<CatalogoMundo />} />
+        <Route path="/cromos/:id" element={<Marcador />} />
+        <Route path={RUTAS.ingresar} element={<Marcador />} />
+        <Route path={RUTAS.registro} element={<Marcador />} />
+        <Route path="*" element={<NoEncontrado />} />
+      </Routes>
+      <GestorCookies />
+      <PanelAccesibilidad />
+    </>
   );
 }

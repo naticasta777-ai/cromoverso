@@ -1,0 +1,108 @@
+.barra-mundo {
+  display: none;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+@media (min-width: 64rem) {
+  .barra-mundo {
+    display: flex;
+  }
+}
+
+.panel-mundo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  border-radius: var(--radio-panel);
+}
+.panel-mundo > h2 {
+  color: var(--texto-principal);
+}
+
+.lista-mundos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+.fila-mundo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3);
+  border: var(--borde-grosor) solid transparent;
+  border-radius: var(--radio-m);
+  color: var(--texto-principal);
+  text-decoration: none;
+}
+.fila-mundo:hover {
+  color: var(--texto-principal);
+  background: var(--fondo-sutil);
+}
+.fila-mundo--actual,
+.fila-mundo--actual:hover {
+  border-color: var(--color-mundo);
+  background: var(--fondo-mundo);
+}
+.fila-mundo__principal {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+.fila-mundo__punto {
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1.5px solid var(--borde-fuerte);
+  border-radius: 50%;
+  background: var(--color-mundo);
+}
+.fila-mundo__nombre {
+  flex: 1;
+}
+.fila-mundo__cantidad {
+  color: var(--texto-secundario);
+}
+.fila-mundo--actual .fila-mundo__cantidad,
+.fila-mundo__actual {
+  color: var(--texto-marca);
+}
+
+.filtro-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+.filtro-fila {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  width: 100%;
+  padding: var(--espacio-1) var(--espacio-2);
+  border: 0;
+  border-radius: var(--radio-s);
+  color: var(--texto-principal);
+  background: transparent;
+  text-align: left;
+}
+.filtro-fila:hover {
+  background: var(--fondo-sutil);
+}
+.filtro-fila[aria-pressed="true"] {
+  background: var(--marca-primario-suave);
+}
+.filtro-fila[aria-pressed="true"] .etiqueta-rareza {
+  border-width: var(--borde-grosor);
+  box-shadow: var(--sombra-pop-pequena);
+}
+.filtro-fila__nombre {
+  color: var(--texto-secundario);
+}
+.filtro-fila__cantidad {
+  margin-left: auto;
+  color: var(--texto-secundario);
+}
+.filtro-fila__marca {
+  width: 1rem;
+  height: 1rem;
+  color: var(--texto-marca);
+}
