@@ -25,10 +25,11 @@
   top: 5.36cqw;
   z-index: 2;
 }
+/* Figma: letrero a left 120 y top -23 del abanico de 560 x 430 (se usa % para que escale) */
 .abanico__sello {
   position: absolute;
-  top: -4.1cqw;
-  left: 21.4cqw;
+  top: -5.35%;
+  left: 21.43%;
   z-index: 3;
   display: flex;
   align-items: center;

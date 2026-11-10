@@ -1,10 +1,33 @@
-/* Todo escala con el ancho de la carta (cqw): sirve para los tamaños G, M y P. */
+/* Las medidas salen del CSS exportado del Figma (tamaños G 240 px, M 168 px y P 116 px
+   de ancho) y están en cqw (1cqw = 1 % del ancho de la carta): la carta se ve igual a
+   cualquier tamaño. Todo se mide desde el borde exterior, como en el Figma; por eso los
+   bordes se dibujan encima con ::after y no ocupan espacio. */
 .cromo {
   --borde-cromo: 2.5px;
   --borde-arte: 2px;
   --sombra-cromo: var(--sombra-pop);
   --sombra-hover: 8px 8px 0 0 var(--borde-fuerte);
-  --alto-arte: 108.33cqw;
+  --arte-alto: 108.33cqw;
+  --rayos-arriba: -38.13cqw;
+  --halo-arriba: 14.98cqw;
+  --hombros-arriba: 70.95cqw;
+  --cabeza-arriba: 45.75cqw;
+  --antifaz-arriba: 55.83cqw;
+  --emblema-arriba: 79.44cqw;
+  --insignia-posicion: 6.67cqw;
+  --numero-texto: 7.14cqw;
+  --numero-interlineado: 9.52cqw;
+  --numero-relleno-v: 1.25cqw;
+  --numero-relleno-h: 3.33cqw;
+  --rareza-izquierda: 81.67cqw;
+  --rareza-ancho: 8.63cqw;
+  --rareza-alto: 11.67cqw;
+  --rareza-icono: 6.25cqw;
+  --pie-abajo: 4.46cqw;
+  --nombre-texto: 7.74cqw;
+  --nombre-interlineado: 10.12cqw;
+  --detalle-texto: 7.14cqw;
+  --detalle-interlineado: 9.52cqw;
   --color-rareza: var(--rareza-comun);
   container-type: inline-size;
   position: relative;
@@ -12,14 +35,46 @@
   aspect-ratio: 5 / 7;
 }
 .cromo--g {
-  --alto-arte: 112.5cqw;
+  --arte-alto: 112.5cqw;
+  --rayos-arriba: -35.67cqw;
+  --halo-arriba: 17.43cqw;
+  --hombros-arriba: 74.67cqw;
+  --cabeza-arriba: 49.47cqw;
+  --antifaz-arriba: 59.55cqw;
+  --emblema-arriba: 83.17cqw;
+  --numero-texto: 5.83cqw;
+  --numero-interlineado: 6.67cqw;
+  --rareza-ancho: 7.92cqw;
+  --pie-abajo: 4.58cqw;
+  --nombre-texto: 7.08cqw;
+  --nombre-interlineado: 9.17cqw;
+  --detalle-texto: 5cqw;
+  --detalle-interlineado: 6.67cqw;
 }
 .cromo--p {
   --borde-cromo: 1.5px;
   --borde-arte: 1.5px;
   --sombra-cromo: var(--sombra-pop-pequena);
   --sombra-hover: 6px 6px 0 0 var(--borde-fuerte);
-  --alto-arte: 118.1cqw;
+  --arte-alto: 118.1cqw;
+  --rayos-arriba: -32.33cqw;
+  --halo-arriba: 20.8cqw;
+  --hombros-arriba: 81.21cqw;
+  --cabeza-arriba: 55.99cqw;
+  --antifaz-arriba: 66.08cqw;
+  --emblema-arriba: 89.71cqw;
+  --insignia-posicion: 6.62cqw;
+  --numero-texto: 7.76cqw;
+  --numero-interlineado: 9.48cqw;
+  --numero-relleno-v: 1.24cqw;
+  --numero-relleno-h: 3.31cqw;
+  --rareza-izquierda: 79.59cqw;
+  --rareza-ancho: 11.21cqw;
+  --rareza-alto: 13.79cqw;
+  --rareza-icono: 8.62cqw;
+  --pie-abajo: 4.16cqw;
+  --nombre-texto: 8.62cqw;
+  --nombre-interlineado: 11.21cqw;
 }
 .cromo--rara {
   --color-rareza: var(--rareza-rara);
@@ -31,23 +86,27 @@
   --color-rareza: var(--rareza-legendaria);
 }
 
+/* Cuerpo blanco de la carta */
 .cromo__carta {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  border: var(--borde-cromo) solid var(--borde-fuerte);
   border-radius: 7.5cqw;
-  background: var(--fondo-superficie);
+  background-color: var(--fondo-superficie, #ffffff);
   box-shadow: var(--sombra-cromo);
-  transition:
-    border-color 160ms ease-out,
-    box-shadow 160ms ease-out;
+  transition: box-shadow 160ms ease-out;
 }
-.cromo-enlace:hover .cromo__carta,
-.cromo-enlace:focus-visible .cromo__carta {
-  border-color: var(--marca-primario);
-  box-shadow: var(--sombra-hover);
+.cromo__carta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: var(--borde-cromo) solid var(--borde-fuerte);
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 160ms ease-out;
 }
+
 .cromo-enlace {
   display: block;
   color: inherit;
@@ -56,31 +115,49 @@
 .cromo-enlace:hover {
   color: inherit;
 }
+.cromo-enlace:hover .cromo__carta,
+.cromo-enlace:focus-visible .cromo__carta {
+  box-shadow: var(--sombra-hover);
+}
+.cromo-enlace:hover .cromo__carta::after,
+.cromo-enlace:focus-visible .cromo__carta::after {
+  border-color: var(--marca-primario);
+}
 
+/* Arte */
 .cromo__arte {
   position: absolute;
   top: 3.33cqw;
   left: 3.33cqw;
-  right: 3.33cqw;
-  height: var(--alto-arte);
+  width: 93.33cqw;
+  height: var(--arte-alto);
   overflow: hidden;
-  border: var(--borde-arte) solid var(--borde-fuerte);
   border-radius: 5cqw;
   background: var(--cromo-color, var(--mundo-neon));
 }
-.cromo__rayos {
+.cromo__arte::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 36%,
-    rgb(255 255 255 / 14%) 0 9deg,
-    transparent 9deg 18deg
-  );
+  z-index: 3;
+  border: var(--borde-arte) solid var(--borde-fuerte);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.cromo .cromo__rayos {
+  position: absolute;
+  top: var(--rayos-arriba);
+  left: -42cqw;
+  width: 177.33cqw;
+  height: 177.33cqw;
+  max-width: none;
+  fill: rgb(255 255 255 / 14%);
+  pointer-events: none;
 }
 .cromo__halo {
   position: absolute;
+  top: var(--halo-arriba);
   left: 14cqw;
-  bottom: 29.5cqw;
   width: 65.33cqw;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -88,17 +165,17 @@
 }
 .cromo__hombros {
   position: absolute;
+  top: var(--hombros-arriba);
   left: 15.87cqw;
-  bottom: -1.2cqw;
   width: 61.6cqw;
-  height: 38.67cqw;
+  height: 38.62cqw;
   border-radius: 25.87cqw 25.87cqw 0 0;
   background: var(--fondo-inverso);
 }
 .cromo__cabeza {
   position: absolute;
+  top: var(--cabeza-arriba);
   left: 32.67cqw;
-  bottom: 34.6cqw;
   width: 28cqw;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -106,8 +183,8 @@
 }
 .cromo__antifaz {
   position: absolute;
+  top: var(--antifaz-arriba);
   left: 34.63cqw;
-  bottom: 46.5cqw;
   width: 24.08cqw;
   height: 6.16cqw;
   border-radius: 3.08cqw;
@@ -115,15 +192,16 @@
 }
 .cromo__emblema {
   position: absolute;
+  top: var(--emblema-arriba);
   left: 39.67cqw;
-  bottom: 15.1cqw;
   width: 14cqw;
   aspect-ratio: 1;
   color: var(--marca-acento);
 }
-.cromo__emblema .icono {
+.cromo .cromo__emblema .icono {
   width: 100%;
   height: 100%;
+  max-width: none;
   fill: currentColor;
   stroke: var(--fondo-inverso);
 }
@@ -140,58 +218,82 @@
   );
 }
 
-.cromo__numero {
+/* Insignia de número y símbolo de rareza: en el Figma están DENTRO del arte,
+   a 8 px de su esquina (por eso se miden desde la esquina del arte: 3,33 + 3,33 cqw) */
+.cromo .cromo__numero {
   position: absolute;
-  top: 3.33cqw;
-  left: 3.33cqw;
-  z-index: 1;
-  padding: 1.25cqw 3.33cqw;
+  top: var(--insignia-posicion);
+  left: var(--insignia-posicion);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--numero-relleno-v) var(--numero-relleno-h);
   border: var(--borde-arte) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
+  font-size: var(--numero-texto);
+  line-height: var(--numero-interlineado);
   color: var(--texto-principal);
   background: var(--fondo-superficie);
 }
+
 .cromo__rareza {
   position: absolute;
-  top: 3.33cqw;
-  left: 78.33cqw;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 8.5cqw;
-  height: 11.67cqw;
-  min-width: 1.1em;
+  top: var(--insignia-posicion);
+  left: var(--rareza-izquierda);
+  z-index: 4;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rareza-ancho);
+  height: var(--rareza-alto);
   border: var(--borde-arte) solid var(--borde-fuerte);
   border-radius: var(--radio-pildora);
   color: var(--color-rareza);
   background: var(--fondo-superficie);
 }
-.cromo__rareza .icono {
-  width: 7cqw;
-  height: 7cqw;
+.cromo .cromo__rareza .icono {
+  display: block;
+  flex-shrink: 0;
+  width: var(--rareza-icono);
+  height: var(--rareza-icono);
+  max-width: none;
+}
+/* Rara, épica y legendaria llevan el símbolo relleno; la común, solo el contorno */
+.cromo--rara .cromo__rareza .icono,
+.cromo--epica .cromo__rareza .icono,
+.cromo--legendaria .cromo__rareza .icono {
+  fill: currentColor;
 }
 
+/* El pie se ancla desde ABAJO: el texto nunca se corta */
 .cromo__pie {
   position: absolute;
-  top: calc(3.33cqw + var(--alto-arte) + 2.9cqw);
-  left: 3.33cqw;
+  z-index: 1;
   right: 3.33cqw;
+  bottom: var(--pie-abajo);
+  left: 3.33cqw;
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
   padding-inline: 1.67cqw;
 }
-.cromo__nombre,
-.cromo__detalle {
+.cromo .cromo__nombre,
+.cromo .cromo__detalle {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.cromo__nombre {
+.cromo .cromo__nombre {
+  font-size: var(--nombre-texto);
+  line-height: var(--nombre-interlineado);
   color: var(--texto-principal);
 }
-.cromo__detalle {
+.cromo .cromo__detalle {
+  font-size: var(--detalle-texto);
+  line-height: var(--detalle-interlineado);
   color: var(--texto-secundario);
 }
 .cromo--p .cromo__detalle {

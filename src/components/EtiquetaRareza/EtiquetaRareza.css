@@ -24,3 +24,9 @@
   height: 0.875rem;
   color: var(--color-rareza);
 }
+
+.etiqueta-rareza--rara .icono,
+.etiqueta-rareza--epica .icono,
+.etiqueta-rareza--legendaria .icono {
+  fill: currentColor;
+}

@@ -19,7 +19,6 @@ export default function AbanicoCromos({
   return (
     <div className="abanico">
       {heroes.map((cromo, indice) => {
-        const posicion = POSICIONES[indice];
         const rareza = rarezas.find((item) => item.id === cromo.rareza) ?? {
           id: cromo.rareza,
           nombre: cromo.rareza,
@@ -33,18 +32,17 @@ export default function AbanicoCromos({
           <Link
             key={cromo.id}
             to={rutaCromo(cromo.id)}
-            className={`cromo-enlace abanico__carta abanico__carta--${posicion}`}
+            className={`cromo-enlace abanico__carta abanico__carta--${POSICIONES[indice]}`}
           >
             <Cromo cromo={cromo} rareza={rareza} tamano="g" detalle={detalle} />
-            {posicion === "centro" && (
-              <span className="abanico__sello detalle-etiqueta">
-                <Icono nombre="destellos" />
-                {guardiana}
-              </span>
-            )}
           </Link>
         );
       })}
+
+      <span className="abanico__sello detalle-etiqueta">
+        <Icono nombre="destellos" />
+        {guardiana}
+      </span>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { RUTAS } from "../../config/rutas.js";
 import { useAccesibilidad } from "../../context/AccesibilidadContext.jsx";
 import Boton from "../Boton/Boton.jsx";
@@ -10,6 +10,12 @@ import SelectorIdioma from "../SelectorIdioma/SelectorIdioma.jsx";
 import "./Navbar.css";
 
 const ID_MENU = "menu-movil";
+
+// "fin" evita que Inicio (/) se marque como activo en todas las rutas.
+const ENLACES = [
+  { clave: "inicio", ruta: RUTAS.inicio, icono: "inicio", fin: true },
+  { clave: "mundos", ruta: RUTAS.mundos, icono: "mundo", fin: false },
+];
 
 export default function Navbar({
   idioma,
@@ -22,31 +28,22 @@ export default function Navbar({
   const [abierto, setAbierto] = useState(false);
   const menu = useRef(null);
   const botonMenu = useRef(null);
-  const { pathname } = useLocation();
-
-  const enlaces = [
-    {
-      clave: "inicio",
-      ruta: RUTAS.inicio,
-      icono: "inicio",
-      activo: pathname === RUTAS.inicio,
-    },
-    {
-      clave: "mundos",
-      ruta: RUTAS.mundos,
-      icono: "mundo",
-      activo: pathname.startsWith(RUTAS.mundos),
-    },
-  ];
 
   // El menú móvil es un <dialog>: foco atrapado, Escape cierra y el resto queda inerte.
   useEffect(() => {
     const dialogo = menu.current;
     if (!dialogo) return;
-    if (abierto && !dialogo.open) dialogo.showModal();
+    if (abierto && !dialogo.open) {
+      try {
+        dialogo.showModal();
+      } catch {
+        dialogo.setAttribute("open", "");
+      }
+    }
     if (!abierto && dialogo.open) dialogo.close();
   }, [abierto]);
 
+  // Si la ventana pasa a escritorio con el menú abierto, se cierra.
   useEffect(() => {
     const consulta = window.matchMedia("(min-width: 64rem)");
     const alCambiar = (evento) => {
@@ -61,6 +58,8 @@ export default function Navbar({
   }
 
   function abrirOpcionesAccesibilidad() {
+    // Cierra primero el menú y después abre el panel, para que no se estorben.
+    menu.current?.close();
     setAbierto(false);
     abrirAccesibilidad(botonMenu.current);
   }
@@ -72,15 +71,15 @@ export default function Navbar({
           <Marca />
           <nav className="navbar__enlaces">
             <ul>
-              {enlaces.map((enlace) => (
+              {ENLACES.map((enlace) => (
                 <li key={enlace.clave}>
-                  <Link
+                  <NavLink
                     to={enlace.ruta}
+                    end={enlace.fin}
                     className="navbar__enlace cuerpo-p-fuerte"
-                    aria-current={enlace.activo ? "page" : undefined}
                   >
                     {navbar.enlaces[enlace.clave]}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -90,6 +89,16 @@ export default function Navbar({
         <div className="navbar__derecha">
           <div className="navbar__escritorio">
             <SelectorIdioma idioma={idioma} onCambiar={onCambiarIdioma} />
+          </div>
+          <div className="navbar__escritorio">
+            <button
+              type="button"
+              className="navbar__accesibilidad"
+              aria-label={navbar.aria.accesibilidad}
+              onClick={(evento) => abrirAccesibilidad(evento.currentTarget)}
+            >
+              <Icono nombre="accesibilidad" />
+            </button>
           </div>
           <Boton
             como={Link}
@@ -140,29 +149,33 @@ export default function Navbar({
 
         <nav className="menu-movil__enlaces">
           <ul>
-            {enlaces.map((enlace) => (
+            {ENLACES.map((enlace) => (
               <li key={enlace.clave}>
-                <Link
+                <NavLink
                   to={enlace.ruta}
+                  end={enlace.fin}
                   className="menu-movil__enlace cuerpo-m-fuerte"
-                  aria-current={enlace.activo ? "page" : undefined}
                   onClick={cerrar}
                 >
-                  <Icono nombre={enlace.icono} />
-                  <span className="menu-movil__texto">
-                    {menuMovil.enlaces[enlace.clave]}
-                  </span>
-                  {enlace.activo ? (
-                    <span className="menu-movil__marca detalle-etiqueta">
-                      {menuMovil.aria.estasAqui}
-                    </span>
-                  ) : (
-                    <Icono
-                      nombre="chevronDer"
-                      className="menu-movil__chevron"
-                    />
+                  {({ isActive }) => (
+                    <>
+                      <Icono nombre={enlace.icono} />
+                      <span className="menu-movil__texto">
+                        {menuMovil.enlaces[enlace.clave]}
+                      </span>
+                      {isActive ? (
+                        <span className="menu-movil__marca detalle-etiqueta">
+                          {menuMovil.aria.estasAqui}
+                        </span>
+                      ) : (
+                        <Icono
+                          nombre="chevronDer"
+                          className="menu-movil__chevron"
+                        />
+                      )}
+                    </>
                   )}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>

@@ -63,6 +63,22 @@
   border-color: var(--fondo-inverso);
 }
 
+/* Botón de accesibilidad de la barra web: 42 x 42, círculo con borde */
+.navbar__accesibilidad {
+  display: grid;
+  place-items: center;
+  width: 2.625rem;
+  height: 2.625rem;
+  padding: 0;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: 50%;
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+.navbar__accesibilidad:hover {
+  background: var(--marca-primario-suave);
+}
+
 /* Logo pequeño en móvil */
 .navbar .marca-home,
 .menu-movil .marca-home {
