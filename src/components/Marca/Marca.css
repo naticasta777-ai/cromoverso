@@ -20,6 +20,8 @@
   background: var(--marca-primario);
 }
 .marca-home__emblema .icono {
+  width: 1.25rem;
+  height: 1.25rem;
   fill: currentColor;
 }
 .marca-home__nombre {
