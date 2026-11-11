@@ -5,35 +5,25 @@
   color: var(--texto-inverso);
   background: var(--fondo-inverso);
 }
-.hero-cromoverso::before {
-  content: "";
+
+/* «Rayos» del Figma. Móvil: 820 x 820 con left 10 y top -360 en una portada de 390 px.
+   Escritorio: 1500 x 1500 con left 380 y top -560 en una portada de 1440 px.
+   Se ancla a la derecha (y al centro en pantallas muy anchas) para que quede
+   detrás de las cartas. Color: marca/primario al 30 %. */
+.hero-cromoverso .hero-cromoverso__rayos {
   position: absolute;
-  inset: 0;
   z-index: -1;
-  background: color-mix(in srgb, var(--marca-primario) 30%, transparent);
-  clip-path: polygon(
-    4% 0,
-    35% 6%,
-    31% 0,
-    100% 0,
-    100% 100%,
-    94% 93%,
-    96% 100%,
-    37% 100%,
-    38% 93%,
-    32% 100%,
-    23% 100%,
-    30% 80%,
-    0 100%,
-    25% 64%,
-    3% 68%,
-    22% 43%,
-    0 34%,
-    22% 24%
-  );
+  top: -360px;
+  left: calc(100% - 380px);
+  width: 820px;
+  height: 820px;
+  max-width: none;
+  fill: color-mix(in srgb, var(--marca-primario) 30%, transparent);
+  pointer-events: none;
 }
 
 .hero-cromoverso__interior {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding-block: var(--espacio-2) 1.75rem;
@@ -63,8 +53,11 @@
 }
 
 @media (min-width: 64rem) {
-  .hero-cromoverso::before {
-    inset: 0 0 0 26%;
+  .hero-cromoverso .hero-cromoverso__rayos {
+    top: -560px;
+    left: min(calc(50% - 340px), calc(100% - 1060px));
+    width: 1500px;
+    height: 1500px;
   }
   .hero-cromoverso__interior {
     display: grid;
