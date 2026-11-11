@@ -1,0 +1,53 @@
+.tarjeta-mundo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  height: 100%;
+  padding: 0.875rem;
+  color: inherit;
+  text-decoration: none;
+}
+.tarjeta-mundo:hover {
+  color: inherit;
+}
+.tarjeta-mundo__arriba {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+}
+.tarjeta-mundo__emblema {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: 50%;
+  color: var(--texto-inverso);
+  background: var(--color-mundo);
+}
+.tarjeta-mundo__emblema .icono {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.tarjeta-mundo__nombre {
+  color: var(--texto-principal);
+}
+.tarjeta-mundo__cantidad {
+  color: var(--texto-secundario);
+}
+
+@media (min-width: 64rem) {
+  .tarjeta-mundo {
+    gap: var(--espacio-3);
+    padding: var(--espacio-4);
+  }
+  .tarjeta-mundo__emblema {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .tarjeta-mundo__emblema .icono {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+}

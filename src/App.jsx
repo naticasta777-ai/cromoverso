@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import GestorCookies from "./components/GestorCookies/GestorCookies.jsx";
 import PanelAccesibilidad from "./components/PanelAccesibilidad/PanelAccesibilidad.jsx";
 import { RUTAS } from "./config/rutas.js";
+import Inicio from "./pages/Inicio.jsx";
 import Marcador from "./pages/Marcador.jsx";
 import NoEncontrado from "./pages/NoEncontrado.jsx";
 
@@ -16,7 +17,7 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path={RUTAS.inicio} element={<Marcador />} />
+        <Route path={RUTAS.inicio} element={<Inicio />} />
         <Route path={RUTAS.mundos} element={<Marcador />} />
         <Route path="/mundos/:id" element={<Marcador />} />
         <Route path="/cromos/:id" element={<Marcador />} />
