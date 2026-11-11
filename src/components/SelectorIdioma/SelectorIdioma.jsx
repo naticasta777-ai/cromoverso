@@ -1,9 +1,12 @@
+import { useTextos } from "../../context/TextosContext.jsx";
 import "./SelectorIdioma.css";
 
-export default function SelectorIdioma({ idioma, onCambiar, etiqueta }) {
+export default function SelectorIdioma({ idioma, onCambiar }) {
+  const textos = useTextos().idioma;
+
   return (
-    <div className="idiomas-home" role="group" aria-label={etiqueta}>
-      {["es", "en"].map((valor) => (
+    <div className="idiomas-home" role="group" aria-label={textos.etiqueta}>
+      {Object.keys(textos.codigos).map((valor) => (
         <button
           type="button"
           key={valor}
@@ -12,7 +15,7 @@ export default function SelectorIdioma({ idioma, onCambiar, etiqueta }) {
           aria-pressed={idioma === valor}
           onClick={() => onCambiar(valor)}
         >
-          {valor.toUpperCase()}
+          {textos.codigos[valor]}
         </button>
       ))}
     </div>

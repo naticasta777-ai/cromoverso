@@ -1,5 +1,7 @@
 export function leerCookie(nombre) {
-  const par = document.cookie.split("; ").find((c) => c.startsWith(`${nombre}=`));
+  const par = document.cookie
+    .split("; ")
+    .find((cookie) => cookie.startsWith(`${nombre}=`));
   return par ? decodeURIComponent(par.split("=")[1]) : null;
 }
 
