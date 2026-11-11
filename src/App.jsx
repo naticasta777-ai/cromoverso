@@ -1,29 +1,31 @@
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import GestorCookies from "./components/GestorCookies/GestorCookies.jsx";
-import SelectorIdioma from "./components/SelectorIdioma/SelectorIdioma.jsx";
-import { usePreferencias } from "./context/PreferenciasContext.jsx";
-import { useTextos } from "./context/TextosContext.jsx";
+import PanelAccesibilidad from "./components/PanelAccesibilidad/PanelAccesibilidad.jsx";
+import { RUTAS } from "./config/rutas.js";
+import Marcador from "./pages/Marcador.jsx";
+import NoEncontrado from "./pages/NoEncontrado.jsx";
 
-// Página temporal para revisar el idioma y las cookies. El PR de navegación la reemplaza.
 export default function App() {
-  const { idioma, cambiarIdioma } = usePreferencias();
-  const textos = useTextos();
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
 
   return (
     <>
-      <main
-        id="contenido"
-        className="contenedor"
-        style={{
-          display: "grid",
-          gap: "var(--espacio-5)",
-          paddingBlock: "var(--espacio-6)",
-        }}
-      >
-        <SelectorIdioma idioma={idioma} onCambiar={cambiarIdioma} />
-        <h1 className="titular-h1">{textos.paginas.inicio.hero.titulo}</h1>
-        <p className="cuerpo-m">{textos.footer.lema}</p>
-      </main>
+      <Routes>
+        <Route path={RUTAS.inicio} element={<Marcador />} />
+        <Route path={RUTAS.mundos} element={<Marcador />} />
+        <Route path="/mundos/:id" element={<Marcador />} />
+        <Route path="/cromos/:id" element={<Marcador />} />
+        <Route path={RUTAS.ingresar} element={<Marcador />} />
+        <Route path={RUTAS.registro} element={<Marcador />} />
+        <Route path="*" element={<NoEncontrado />} />
+      </Routes>
       <GestorCookies />
+      <PanelAccesibilidad />
     </>
   );
 }

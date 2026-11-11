@@ -9,7 +9,6 @@
   border-radius: 50%;
   color: var(--texto-inverso);
   background: var(--fondo-inverso-2);
-  cursor: pointer;
 }
 .boton-menu:hover {
   background: var(--marca-primario);

@@ -1,30 +1,29 @@
 import { proyecto } from "../../config/proyecto.js";
-import { useInterfaz, usePreferencias } from "../../context/PreferenciasContext.jsx";
+import { usePreferencias } from "../../context/PreferenciasContext.jsx";
+import { useTextos } from "../../context/TextosContext.jsx";
 import Footer from "../Footer/Footer.jsx";
-import GestorCookies from "../GestorCookies/GestorCookies.jsx";
 import Navbar from "../Navbar/Navbar.jsx";
-import SaltarContenido from "../SaltarContenido/SaltarContenido.jsx";
 import "./LayoutPublico.css";
 
-export default function LayoutPublico({ tonoMovil = "claro", children }) {
+export default function LayoutPublico({
+  tonoMovil = "claro",
+  sinNavbarMovil = false,
+  children,
+}) {
   const { idioma, cambiarIdioma } = usePreferencias();
-  const textos = useInterfaz();
+  const textos = useTextos();
+  const clases = `landing ${proyecto.id}${sinNavbarMovil ? " landing--sin-navbar-movil" : ""}`;
 
   return (
-    <div className={`landing ${proyecto.id}`}>
-      <SaltarContenido texto={textos.saltar} />
+    <div className={clases}>
       <Navbar
-        nombre={proyecto.nombre}
         idioma={idioma}
         onCambiarIdioma={cambiarIdioma}
         textos={textos}
         tonoMovil={tonoMovil}
       />
-      <main id="contenido" tabIndex={-1}>
-        {children}
-      </main>
-      <Footer nombre={proyecto.nombre} textos={textos} />
-      <GestorCookies />
+      <main id="contenido">{children}</main>
+      <Footer textos={textos} />
     </div>
   );
 }

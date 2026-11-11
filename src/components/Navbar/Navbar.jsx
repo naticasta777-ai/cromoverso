@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { RUTAS } from "../../config/rutas.js";
+import { useAccesibilidad } from "../../context/AccesibilidadContext.jsx";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono/Icono.jsx";
 import Marca from "../Marca/Marca.jsx";
@@ -10,24 +11,39 @@ import "./Navbar.css";
 
 const ID_MENU = "menu-movil";
 
-export default function Navbar({ nombre, idioma, onCambiarIdioma, textos, tonoMovil = "claro" }) {
+// "fin" evita que Inicio (/) se marque como activo en todas las rutas.
+const ENLACES = [
+  { clave: "inicio", ruta: RUTAS.inicio, icono: "inicio", fin: true },
+  { clave: "mundos", ruta: RUTAS.mundos, icono: "mundo", fin: false },
+];
+
+export default function Navbar({
+  idioma,
+  onCambiarIdioma,
+  textos,
+  tonoMovil = "claro",
+}) {
+  const { navbar, menuMovil } = textos;
+  const { abrir: abrirAccesibilidad } = useAccesibilidad();
   const [abierto, setAbierto] = useState(false);
   const menu = useRef(null);
   const botonMenu = useRef(null);
-  const { pathname } = useLocation();
 
-  const enlaces = [
-    { clave: "inicio", ruta: RUTAS.inicio, texto: textos.inicio, icono: "inicio", activo: pathname === RUTAS.inicio },
-    { clave: "mundos", ruta: RUTAS.mundos, texto: textos.mundos, icono: "mundo", activo: pathname.startsWith("/mundos") },
-  ];
-
+  // El menú móvil es un <dialog>: foco atrapado, Escape cierra y el resto queda inerte.
   useEffect(() => {
     const dialogo = menu.current;
     if (!dialogo) return;
-    if (abierto && !dialogo.open) dialogo.showModal();
+    if (abierto && !dialogo.open) {
+      try {
+        dialogo.showModal();
+      } catch {
+        dialogo.setAttribute("open", "");
+      }
+    }
     if (!abierto && dialogo.open) dialogo.close();
   }, [abierto]);
 
+  // Si la ventana pasa a escritorio con el menú abierto, se cierra.
   useEffect(() => {
     const consulta = window.matchMedia("(min-width: 64rem)");
     const alCambiar = (evento) => {
@@ -41,27 +57,29 @@ export default function Navbar({ nombre, idioma, onCambiarIdioma, textos, tonoMo
     setAbierto(false);
   }
 
-  function alCerrarDialogo() {
+  function abrirOpcionesAccesibilidad() {
+    // Cierra primero el menú y después abre el panel, para que no se estorben.
+    menu.current?.close();
     setAbierto(false);
-    botonMenu.current?.focus();
+    abrirAccesibilidad(botonMenu.current);
   }
 
   return (
     <header className={`navbar navbar--movil-${tonoMovil}`}>
       <div className="navbar__interior">
         <div className="navbar__izquierda">
-          <Marca nombre={nombre} />
-          <nav className="navbar__enlaces" aria-label={textos.principal}>
+          <Marca />
+          <nav className="navbar__enlaces">
             <ul>
-              {enlaces.map((enlace) => (
+              {ENLACES.map((enlace) => (
                 <li key={enlace.clave}>
-                  <Link
+                  <NavLink
                     to={enlace.ruta}
+                    end={enlace.fin}
                     className="navbar__enlace cuerpo-p-fuerte"
-                    aria-current={enlace.activo ? "page" : undefined}
                   >
-                    {enlace.texto}
-                  </Link>
+                    {navbar.enlaces[enlace.clave]}
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -70,14 +88,34 @@ export default function Navbar({ nombre, idioma, onCambiarIdioma, textos, tonoMo
 
         <div className="navbar__derecha">
           <div className="navbar__escritorio">
-            <SelectorIdioma idioma={idioma} onCambiar={onCambiarIdioma} etiqueta={textos.idioma} />
+            <SelectorIdioma idioma={idioma} onCambiar={onCambiarIdioma} />
           </div>
-          <Boton como={Link} to={RUTAS.ingresar} variante="secundario" tamano="p">
-            {textos.ingresar}
+          <div className="navbar__escritorio">
+            <button
+              type="button"
+              className="navbar__accesibilidad"
+              aria-label={navbar.aria.accesibilidad}
+              onClick={(evento) => abrirAccesibilidad(evento.currentTarget)}
+            >
+              <Icono nombre="accesibilidad" />
+            </button>
+          </div>
+          <Boton
+            como={Link}
+            to={RUTAS.ingresar}
+            variante="secundario"
+            tamano="p"
+          >
+            {navbar.botones.ingresar}
           </Boton>
           <div className="navbar__escritorio">
-            <Boton como={Link} to={RUTAS.registro} variante="primario" tamano="p">
-              {textos.registro}
+            <Boton
+              como={Link}
+              to={RUTAS.registro}
+              variante="primario"
+              tamano="p"
+            >
+              {navbar.botones.crearCuenta}
             </Boton>
           </div>
           <MenuMovil
@@ -85,7 +123,7 @@ export default function Navbar({ nombre, idioma, onCambiarIdioma, textos, tonoMo
             onAlternar={() => setAbierto((valor) => !valor)}
             menuId={ID_MENU}
             botonRef={botonMenu}
-            textos={textos}
+            textos={menuMovil}
           />
         </div>
       </div>
@@ -94,50 +132,90 @@ export default function Navbar({ nombre, idioma, onCambiarIdioma, textos, tonoMo
         ref={menu}
         id={ID_MENU}
         className="menu-movil"
-        aria-label={textos.principal}
-        onClose={alCerrarDialogo}
+        aria-label={navbar.logo.texto}
+        onClose={() => setAbierto(false)}
       >
         <div className="menu-movil__encabezado">
-          <Marca nombre={nombre} />
-          <button type="button" className="menu-movil__cerrar" aria-label={textos.cerrarMenu} onClick={cerrar}>
+          <Marca onClick={cerrar} />
+          <button
+            type="button"
+            className="menu-movil__cerrar"
+            aria-label={menuMovil.cerrar}
+            onClick={cerrar}
+          >
             <Icono nombre="cerrar" />
           </button>
         </div>
 
-        <nav className="menu-movil__enlaces" aria-label={textos.principal}>
+        <nav className="menu-movil__enlaces">
           <ul>
-            {enlaces.map((enlace) => (
+            {ENLACES.map((enlace) => (
               <li key={enlace.clave}>
-                <Link
+                <NavLink
                   to={enlace.ruta}
+                  end={enlace.fin}
                   className="menu-movil__enlace cuerpo-m-fuerte"
-                  aria-current={enlace.activo ? "page" : undefined}
                   onClick={cerrar}
                 >
-                  <Icono nombre={enlace.icono} />
-                  <span className="menu-movil__texto">{enlace.texto}</span>
-                  {enlace.activo ? (
-                    <span className="menu-movil__marca detalle-etiqueta">{textos.estasAqui}</span>
-                  ) : (
-                    <Icono nombre="chevronDer" className="menu-movil__chevron" />
+                  {({ isActive }) => (
+                    <>
+                      <Icono nombre={enlace.icono} />
+                      <span className="menu-movil__texto">
+                        {menuMovil.enlaces[enlace.clave]}
+                      </span>
+                      {isActive ? (
+                        <span className="menu-movil__marca detalle-etiqueta">
+                          {menuMovil.aria.estasAqui}
+                        </span>
+                      ) : (
+                        <Icono
+                          nombre="chevronDer"
+                          className="menu-movil__chevron"
+                        />
+                      )}
+                    </>
                   )}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
         </nav>
 
         <div className="menu-movil__fila cuerpo-m-fuerte">
-          <span>{textos.idioma}</span>
-          <SelectorIdioma idioma={idioma} onCambiar={onCambiarIdioma} etiqueta={textos.idioma} />
+          <span>{menuMovil.secciones.idioma}</span>
+          <SelectorIdioma idioma={idioma} onCambiar={onCambiarIdioma} />
+        </div>
+
+        <div className="menu-movil__fila cuerpo-m-fuerte">
+          <span>{menuMovil.secciones.accesibilidad}</span>
+          <button
+            type="button"
+            className="menu-movil__accesibilidad"
+            aria-label={navbar.aria.accesibilidad}
+            onClick={abrirOpcionesAccesibilidad}
+          >
+            <Icono nombre="accesibilidad" />
+          </button>
         </div>
 
         <div className="menu-movil__sesion">
-          <Boton como={Link} to={RUTAS.ingresar} variante="secundario" tamano="m" onClick={cerrar}>
-            {textos.ingresar}
+          <Boton
+            como={Link}
+            to={RUTAS.ingresar}
+            variante="secundario"
+            tamano="m"
+            onClick={cerrar}
+          >
+            {menuMovil.botones.ingresar}
           </Boton>
-          <Boton como={Link} to={RUTAS.registro} variante="primario" tamano="m" onClick={cerrar}>
-            {textos.registro}
+          <Boton
+            como={Link}
+            to={RUTAS.registro}
+            variante="primario"
+            tamano="m"
+            onClick={cerrar}
+          >
+            {menuMovil.botones.crearCuenta}
           </Boton>
         </div>
       </dialog>
