@@ -1,0 +1,25 @@
+.catalogo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-4) 7.5rem;
+}
+.catalogo__principal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .catalogo {
+    display: grid;
+    grid-template-columns: 18.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--espacio-6);
+    padding-block: 2.5rem 3.5rem;
+  }
+  .catalogo__principal {
+    gap: var(--espacio-5);
+  }
+}

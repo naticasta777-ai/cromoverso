@@ -1,0 +1,36 @@
+.filtros-movil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+.filtros-movil__selectores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+.filtro-pildora {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.filtro-pildora select {
+  min-height: 2.5rem;
+  padding: var(--espacio-2) 2.25rem var(--espacio-2) 0.875rem;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  appearance: none;
+}
+.filtro-pildora .icono {
+  position: absolute;
+  right: 0.875rem;
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+}
+@media (min-width: 64rem) {
+  .filtros-movil {
+    display: none;
+  }
+}
