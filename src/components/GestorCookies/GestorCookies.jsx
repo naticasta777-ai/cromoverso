@@ -1,23 +1,24 @@
 import { useState } from "react";
-import { useInterfaz, usePreferencias } from "../../context/PreferenciasContext.jsx";
+import { useTextos } from "../../context/TextosContext.jsx";
+import { usePreferencias } from "../../context/PreferenciasContext.jsx";
 import BannerCookies from "../BannerCookies/BannerCookies.jsx";
 import Icono from "../Icono/Icono.jsx";
 import "./GestorCookies.css";
 
 export default function GestorCookies() {
   const { consentimiento, guardarConsentimiento, error } = usePreferencias();
-  const textos = useInterfaz();
-  const [mensaje, setMensaje] = useState(false);
+  const textos = useTextos();
+  const [guardado, setGuardado] = useState(false);
 
   function decidir(permitir) {
-    if (guardarConsentimiento(permitir)) setMensaje(true);
+    if (guardarConsentimiento(permitir)) setGuardado(true);
   }
 
   return (
     <>
       {!consentimiento && (
         <BannerCookies
-          textos={textos}
+          textos={textos.cookies.banner}
           onAceptar={() => decidir(true)}
           onRechazar={() => decidir(false)}
         />
@@ -25,11 +26,11 @@ export default function GestorCookies() {
       {error && (
         <p className="error-cookies cuerpo-p-fuerte" role="alert">
           <Icono nombre="alerta" />
-          {textos.errorCookies}
+          {textos.errores.generico}
         </p>
       )}
       <span className="visualmente-oculto" role="status">
-        {mensaje ? textos.guardado : ""}
+        {guardado ? textos.estados.mensajes.guardado : ""}
       </span>
     </>
   );
