@@ -1,0 +1,27 @@
+.estado-pagina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-4);
+  min-height: 50dvh;
+  padding-block: var(--espacio-8);
+  text-align: center;
+}
+.estado-pagina__icono {
+  width: 3rem;
+  height: 3rem;
+}
+.estado-pagina__giro {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 4px solid var(--marca-primario-suave);
+  border-top-color: var(--marca-primario);
+  border-radius: 50%;
+  animation: estado-pagina-giro 800ms linear infinite;
+}
+@keyframes estado-pagina-giro {
+  to {
+    transform: rotate(360deg);
+  }
+}
