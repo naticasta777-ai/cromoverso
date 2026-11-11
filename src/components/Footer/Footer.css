@@ -20,7 +20,6 @@
   gap: var(--espacio-3);
 }
 .pie__lema {
-  margin: 0;
   max-width: 46.875rem;
   color: var(--texto-inverso-suave);
 }
@@ -35,16 +34,12 @@
   gap: 0.625rem;
 }
 .pie__grupo h2 {
-  margin: 0;
   color: var(--marca-acento);
 }
 .pie__grupo ul {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 .pie__enlace {
   padding: 0;
@@ -58,10 +53,8 @@ a.pie__enlace:hover,
 button.pie__enlace:hover {
   color: var(--texto-inverso);
   text-decoration: underline;
-  cursor: pointer;
 }
 .pie__creditos {
-  margin: 0;
   padding-top: 1.25rem;
   border-top: 1px solid var(--borde-inverso);
   color: var(--texto-inverso-suave);
