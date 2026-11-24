@@ -42,14 +42,14 @@ El archivo `.env` no se sube al repositorio. La plantilla es `.env.example`.
 
 ## Scripts
 
-| Comando                | Qué hace                                    |
-| ---------------------- | ------------------------------------------- |
-| `npm run dev`          | Servidor de desarrollo                      |
-| `npm run build`        | Compilación de producción (carpeta `dist`)  |
+| Comando                | Qué hace                                      |
+| ---------------------- | --------------------------------------------- |
+| `npm run dev`          | Servidor de desarrollo                        |
+| `npm run build`        | Compilación de producción (carpeta `dist`)    |
 | `npm run preview`      | Sirve la compilación como si fuera producción |
-| `npm run lint`         | Revisa el código con ESLint                 |
-| `npm run format`       | Da formato con Prettier (escribe cambios)   |
-| `npm run format:check` | Comprueba el formato sin cambiar archivos   |
+| `npm run lint`         | Revisa el código con ESLint                   |
+| `npm run format`       | Da formato con Prettier (escribe cambios)     |
+| `npm run format:check` | Comprueba el formato sin cambiar archivos     |
 
 ## Estructura
 
@@ -74,11 +74,11 @@ src/
 
 ## Cookies
 
-| Cookie          | Cuándo se guarda                                                 |
-| --------------- | ---------------------------------------------------------------- |
-| `consentimiento` | Al aceptar o rechazar el aviso de cookies                       |
-| `idioma`        | Solo si la persona aceptó las cookies                            |
-| `accesibilidad` | Solo si la persona aceptó las cookies                            |
+| Cookie           | Cuándo se guarda                          |
+| ---------------- | ----------------------------------------- |
+| `consentimiento` | Al aceptar o rechazar el aviso de cookies |
+| `idioma`         | Solo si la persona aceptó las cookies     |
+| `accesibilidad`  | Solo si la persona aceptó las cookies     |
 
 ## Despliegue en Vercel
 
@@ -87,7 +87,7 @@ src/
 3. En Environment Variables agrega `VITE_API_URL` para **Production y Preview**.
 4. `vercel.json` redirige todas las rutas a `index.html`, para que direcciones como `/mundos/neon` funcionen al recargar.
 
-La rama `main` es la de producción. Cada rama con su pull request genera un despliegue de prueba (*Preview*) que se revisa antes de fusionar.
+La rama `main` es la de producción. Cada rama con su pull request genera un despliegue de prueba (_Preview_) que se revisa antes de fusionar.
 
 ## Flujo de trabajo
 
