@@ -1,4 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { EsqueletoFicha } from "../components/Esqueleto/Esqueleto.jsx";
 import EstadoPagina from "../components/EstadoPagina/EstadoPagina.jsx";
 import FichaCromo from "../components/FichaCromo/FichaCromo.jsx";
 import LayoutPublico from "../components/LayoutPublico/LayoutPublico.jsx";
@@ -15,7 +16,8 @@ export default function DetalleCromo() {
   const { id } = useParams();
   const navigate = useNavigate();
   const ubicacion = useLocation();
-  const detalle = useTextos().paginas.detalleCromo;
+  const textos = useTextos();
+  const detalle = textos.paginas.detalleCromo;
   const {
     cromo,
     rarezas,
@@ -52,21 +54,24 @@ export default function DetalleCromo() {
     );
   }
 
+  // Estado de error: mensaje de textos.errores según el código y botón para reintentar.
   if (error) {
     return (
       <LayoutPublico>
         <EstadoPagina
           tipo={error.estado === 0 ? "sinConexion" : "error"}
+          codigo={error.codigo}
           onReintentar={reintentar}
         />
       </LayoutPublico>
     );
   }
 
+  // Estado de carga: esqueleto de la ficha.
   if (!cromo) {
     return (
       <LayoutPublico>
-        <EstadoPagina tipo="cargando" />
+        <EsqueletoFicha texto={textos.estados.cargando} />
       </LayoutPublico>
     );
   }
