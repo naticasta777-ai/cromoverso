@@ -3,6 +3,7 @@ import { rutaCromo } from "../../config/rutas.js";
 import { plantilla } from "../../utils/textos.js";
 import Boton from "../Boton/Boton.jsx";
 import Cromo from "../Cromo/Cromo.jsx";
+import { EsqueletoCromo } from "../Esqueleto/Esqueleto.jsx";
 import Icono from "../Icono/Icono.jsx";
 import "./GrillaCromos.css";
 
@@ -35,12 +36,19 @@ export default function GrillaCromos({
       </div>
 
       <div className="grilla-cromos__casillas">
-        {cromos.length > 0 ? (
+        {cargando ? (
+          // Estado de carga: esqueletos con la misma forma de las cartas.
+          <ul className="grilla-cromos__lista" aria-hidden="true">
+            {Array.from({ length: Math.max(cromos.length, 10) }, (_, indice) => (
+              <li key={indice}>
+                <EsqueletoCromo />
+              </li>
+            ))}
+          </ul>
+        ) : cromos.length > 0 ? (
           <ul className="grilla-cromos__lista">
             {cromos.map((cromo) => {
-              const rareza = rarezas.find(
-                (item) => item.id === cromo.rareza,
-              ) ?? {
+              const rareza = rarezas.find((item) => item.id === cromo.rareza) ?? {
                 id: cromo.rareza,
                 nombre: cromo.rareza,
               };
@@ -63,15 +71,14 @@ export default function GrillaCromos({
             })}
           </ul>
         ) : (
-          !cargando && (
-            <div className="grilla-cromos__vacio">
-              <h2 className="titular-h4">{album.vacio.titulo}</h2>
-              <p className="cuerpo-p">{album.vacio.texto}</p>
-              <Boton variante="secundario" tamano="m" onClick={onLimpiar}>
-                {album.vacio.botones.limpiar}
-              </Boton>
-            </div>
-          )
+          // Estado vacío: ninguna carta cumple la combinación de filtros.
+          <div className="grilla-cromos__vacio">
+            <h2 className="titular-h4">{album.vacio.titulo}</h2>
+            <p className="cuerpo-p">{album.vacio.texto}</p>
+            <Boton variante="secundario" tamano="m" onClick={onLimpiar}>
+              {album.vacio.botones.limpiar}
+            </Boton>
+          </div>
         )}
       </div>
 
