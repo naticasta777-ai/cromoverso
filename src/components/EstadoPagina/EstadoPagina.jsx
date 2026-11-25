@@ -7,15 +7,17 @@ import Icono from "../Icono/Icono.jsx";
 import "./EstadoPagina.css";
 
 // tipo: "cargando" | "error" | "sinConexion" | "noEncontrado" | "vacio"
-// personalizado: textos propios para «noEncontrado» (por ejemplo, los de un cromo):
-// { titulo, texto, boton, ruta }
+// codigo: código de la API (por ejemplo "falla_simulada"); en el estado de error
+//   el mensaje sale de textos.errores[codigo].
+// personalizado: textos propios para «noEncontrado»: { titulo, texto, boton, ruta }
 export default function EstadoPagina({
   tipo,
   mundo,
+  codigo,
   personalizado,
   onReintentar,
 }) {
-  const { estados } = useTextos();
+  const { estados, errores } = useTextos();
 
   if (tipo === "cargando") {
     const texto = mundo
@@ -53,6 +55,7 @@ export default function EstadoPagina({
       : tipo === "sinConexion"
         ? "wifioff"
         : "alerta";
+  const texto = tipo === "error" ? (errores[codigo] ?? bloque.texto) : bloque.texto;
 
   return (
     <section
@@ -61,9 +64,13 @@ export default function EstadoPagina({
     >
       <Icono nombre={icono} className="estado-pagina__icono" />
       <h1 className="titular-h2">{bloque.titulo}</h1>
-      <p className="cuerpo-m">{bloque.texto}</p>
+      <p className="cuerpo-m">{texto}</p>
       {tipo === "noEncontrado" ? (
-        <Boton como={Link} to={personalizado?.ruta ?? RUTAS.inicio} tamano="m">
+        <Boton
+          como={Link}
+          to={personalizado?.ruta ?? RUTAS.inicio}
+          tamano="m"
+        >
           {personalizado?.boton ?? estados.noEncontrado.botones.irAlInicio}
         </Boton>
       ) : (
