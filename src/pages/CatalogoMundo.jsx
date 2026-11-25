@@ -18,8 +18,12 @@ import {
 } from "../utils/textos.js";
 import "./CatalogoMundo.css";
 
-export default function CatalogoMundo() {
-  const { id } = useParams();
+// idMundo: se usa cuando el catálogo va de fondo de otra vista (el detalle de un
+// cromo), porque ahí el id de la dirección es el del cromo y no el del mundo.
+// incrustado: no cambia el título ni la descripción de la página.
+export default function CatalogoMundo({ idMundo, incrustado = false }) {
+  const { id: idRuta } = useParams();
+  const id = idMundo ?? idRuta;
   const textos = useTextos();
   const album = textos.paginas.albumMundo;
   const buscador = textos.navbar.buscador;
@@ -51,8 +55,10 @@ export default function CatalogoMundo() {
   const numero = mundos.findIndex((item) => item.id === id) + 1;
 
   useMetadatos(
-    mundo ? plantilla(album.seo.titulo, { mundo: mundo.nombre }) : undefined,
-    mundo
+    mundo && !incrustado
+      ? plantilla(album.seo.titulo, { mundo: mundo.nombre })
+      : undefined,
+    mundo && !incrustado
       ? plantilla(album.seo.descripcion, { mundo: mundo.nombre })
       : undefined,
   );

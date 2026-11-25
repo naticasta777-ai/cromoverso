@@ -1,0 +1,32 @@
+/* Medidas del Figma. Quien la usa puede cambiar las variables:
+   --barra-etiqueta, --barra-valor, --barra-hueco y --color-cromo. */
+.barra-atributo {
+  display: grid;
+  grid-template-columns:
+    var(--barra-etiqueta, 5rem) minmax(0, 1fr)
+    var(--barra-valor, 2.125rem);
+  align-items: center;
+  gap: var(--barra-hueco, 0.625rem);
+}
+.barra-atributo__valor {
+  text-align: right;
+}
+.barra-atributo__pista {
+  position: relative;
+  display: block;
+  height: 0.75rem;
+  border: 1.5px solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--fondo-superficie);
+}
+/* El relleno tiene su propio borde y cubre el de la pista, como en el Figma */
+.barra-atributo__relleno {
+  position: absolute;
+  top: -1.5px;
+  bottom: -1.5px;
+  left: -1.5px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--borde-fuerte);
+  border-radius: var(--radio-pildora);
+  background: var(--color-cromo, var(--marca-primario));
+}

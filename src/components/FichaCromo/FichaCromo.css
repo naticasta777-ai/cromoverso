@@ -1,0 +1,342 @@
+/* Móvil primero: hoja inferior (Figma: 390 px, relleno 10/20/26, radio 28).
+   Desde 64rem: ventana de 1000 px con panel de color y columna de información. */
+.ficha {
+  --barra-etiqueta: 5rem;
+  --barra-valor: 2.125rem;
+  --barra-hueco: 0.625rem;
+  width: 100%;
+  max-width: 100%;
+  max-height: 92dvh;
+  margin: auto 0 0;
+  padding: 0;
+  overflow: auto;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-bottom: 0;
+  border-radius: 1.75rem 1.75rem 0 0;
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  box-shadow: var(--sombra-flotante);
+}
+.ficha::backdrop {
+  background: var(--fondo-inverso);
+}
+
+.ficha__contenido {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr);
+  grid-template-areas:
+    "asa asa"
+    "cerrar cerrar"
+    "carta titulo"
+    "poder poder"
+    "descripcion descripcion"
+    "atributos atributos";
+  align-items: start;
+  gap: 0.875rem 1rem;
+  padding: 0.625rem 1.25rem 1.625rem;
+}
+
+.ficha__asa {
+  grid-area: asa;
+  justify-self: center;
+  width: 2.75rem;
+  height: 0.3125rem;
+  border-radius: 0.1875rem;
+  background: var(--borde-sutil);
+}
+
+/* Botón de cerrar */
+.ficha__cerrar {
+  grid-area: cerrar;
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: 50%;
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+.ficha__cerrar:hover {
+  background: var(--marca-primario-suave);
+}
+.ficha__cerrar .icono {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+/* Carta */
+.ficha__carta {
+  grid-area: carta;
+  margin-top: 0.5rem;
+}
+.ficha__rayos {
+  display: none;
+}
+.ficha__carta-interior {
+  width: 100%;
+}
+
+/* Identidad (en móvil: código, nombre, mundo y tipo, y rareza) */
+.ficha__titulo {
+  grid-area: titulo;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  min-width: 0;
+  margin-top: 0.5rem;
+}
+.ficha__codigo,
+.ficha__mundo-tipo {
+  color: var(--texto-secundario);
+}
+.ficha__ubicacion,
+.ficha__etiquetas {
+  display: none;
+}
+
+/* Poder */
+.ficha__poder {
+  grid-area: poder;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.875rem;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  border-radius: var(--radio-l);
+  background: var(--suave-cromo);
+}
+.ficha__poder-circulo {
+  display: none;
+}
+.ficha__poder-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.ficha__poder-etiqueta {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--texto-secundario);
+}
+.ficha .ficha__poder-mini {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-cromo);
+}
+
+.ficha__descripcion {
+  grid-area: descripcion;
+  color: var(--texto-secundario);
+}
+
+/* Atributos */
+.ficha__atributos {
+  grid-area: atributos;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.ficha__atributos-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+}
+.ficha__total {
+  display: none;
+  color: var(--texto-secundario);
+}
+.ficha__lista-atributos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.ficha__escala {
+  color: var(--texto-secundario);
+}
+
+/* Anterior y siguiente: solo en escritorio */
+.ficha__navegacion {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .ficha {
+    --barra-etiqueta: 6rem;
+    --barra-valor: 2.5rem;
+    --barra-hueco: 1rem;
+    width: min(62.5rem, calc(100% - 2rem));
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    border-bottom: var(--borde-grosor) solid var(--borde-fuerte);
+    border-radius: 1.75rem;
+  }
+  .ficha::backdrop {
+    background: color-mix(in srgb, var(--fondo-inverso) 82%, transparent);
+  }
+
+  .ficha__contenido {
+    grid-template-columns: 19.75rem minmax(0, 1fr);
+    grid-template-areas:
+      "carta etiquetas"
+      "carta titulo"
+      "carta poder"
+      "carta descripcion"
+      "carta atributos"
+      "carta navegacion";
+    gap: 1.25rem 2.5rem;
+    padding: 2.5rem;
+  }
+  .ficha__asa {
+    display: none;
+  }
+
+  /* CAMBIO: la X queda por encima de las etiquetas para que reciba el clic */
+  .ficha__cerrar {
+    grid-area: etiquetas;
+    position: relative;
+    z-index: 1;
+    width: 2.875rem;
+    height: 2.875rem;
+    border: 3px solid var(--marca-primario);
+  }
+  .ficha__cerrar .icono {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Panel de color con rayos y la carta G de 240 px */
+  .ficha__carta {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    justify-content: center;
+    min-height: 26.25rem;
+    margin-top: 0;
+    padding: 2.5rem 2.25rem;
+    overflow: hidden;
+    border: var(--borde-grosor) solid var(--borde-fuerte);
+    border-radius: var(--radio-xl);
+    background: var(--color-cromo);
+  }
+  .ficha .ficha__rayos {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 240%;
+    max-width: none;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    fill: color-mix(in srgb, var(--fondo-inverso) 30%, transparent);
+    opacity: 0.16;
+    pointer-events: none;
+  }
+  .ficha__carta-interior {
+    position: relative;
+    z-index: 1;
+    width: 15rem;
+  }
+
+  /* CAMBIO: las etiquetas ya no cubren todo el ancho de la celda */
+  .ficha__etiquetas {
+    grid-area: etiquetas;
+    justify-self: start;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espacio-2);
+    min-height: 2.875rem;
+    max-width: calc(100% - 3.5rem);
+  }
+
+  .ficha__titulo {
+    gap: var(--espacio-1);
+    margin-top: 0;
+  }
+  .ficha__codigo,
+  .ficha__mundo-tipo {
+    display: none;
+  }
+  .ficha .ficha__rareza-movil {
+    display: none;
+  }
+  .ficha__ubicacion {
+    display: block;
+    color: var(--texto-secundario);
+  }
+  .ficha .ficha__nombre {
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 2.875rem;
+    letter-spacing: -1px;
+  }
+
+  /* Poder: círculo con ícono y etiqueta de color de marca */
+  .ficha__poder {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding: var(--espacio-4);
+  }
+  .ficha__poder-circulo {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    color: var(--texto-inverso);
+    background: var(--color-cromo);
+  }
+  .ficha__poder-circulo .icono {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .ficha__poder-contenido {
+    gap: 0.125rem;
+  }
+  .ficha__poder-etiqueta {
+    color: var(--texto-marca);
+  }
+  .ficha .ficha__poder-mini {
+    display: none;
+  }
+
+  /* Atributos dentro de una caja de fondo sutil */
+  .ficha__atributos {
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border-radius: var(--radio-l);
+    background: var(--fondo-sutil);
+  }
+  .ficha__lista-atributos {
+    gap: 0.75rem;
+  }
+  .ficha__total {
+    display: block;
+  }
+  .ficha__escala {
+    display: none;
+  }
+  .ficha .barra-atributo__valor {
+    font-family: var(--fuente-rubik);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.375rem;
+  }
+
+  .ficha__navegacion {
+    grid-area: navegacion;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-2);
+  }
+}

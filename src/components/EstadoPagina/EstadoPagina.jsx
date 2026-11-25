@@ -7,7 +7,14 @@ import Icono from "../Icono/Icono.jsx";
 import "./EstadoPagina.css";
 
 // tipo: "cargando" | "error" | "sinConexion" | "noEncontrado" | "vacio"
-export default function EstadoPagina({ tipo, mundo, onReintentar }) {
+// personalizado: textos propios para «noEncontrado» (por ejemplo, los de un cromo):
+// { titulo, texto, boton, ruta }
+export default function EstadoPagina({
+  tipo,
+  mundo,
+  personalizado,
+  onReintentar,
+}) {
   const { estados } = useTextos();
 
   if (tipo === "cargando") {
@@ -36,7 +43,7 @@ export default function EstadoPagina({ tipo, mundo, onReintentar }) {
 
   const bloque =
     tipo === "noEncontrado"
-      ? estados.noEncontrado
+      ? (personalizado ?? estados.noEncontrado)
       : tipo === "sinConexion"
         ? estados.sinConexion
         : estados.error;
@@ -56,8 +63,8 @@ export default function EstadoPagina({ tipo, mundo, onReintentar }) {
       <h1 className="titular-h2">{bloque.titulo}</h1>
       <p className="cuerpo-m">{bloque.texto}</p>
       {tipo === "noEncontrado" ? (
-        <Boton como={Link} to={RUTAS.inicio} tamano="m">
-          {estados.noEncontrado.botones.irAlInicio}
+        <Boton como={Link} to={personalizado?.ruta ?? RUTAS.inicio} tamano="m">
+          {personalizado?.boton ?? estados.noEncontrado.botones.irAlInicio}
         </Boton>
       ) : (
         <Boton tamano="m" onClick={onReintentar}>
