@@ -1,0 +1,114 @@
+/* Móvil: solo el formulario. Desde 64rem: panel de presentación a la izquierda. */
+.ingresar {
+  display: flex;
+  flex-direction: column;
+  background: var(--fondo-pagina, var(--fondo-superficie));
+}
+.ingresar__presentacion {
+  display: none;
+}
+.ingresar__panel {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: var(--espacio-6) var(--espacio-4) 3.5rem;
+}
+.ingresar__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  width: 100%;
+  max-width: 28rem;
+}
+.ingresar__encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+.ingresar__subtitulo {
+  color: var(--texto-secundario);
+}
+
+/* Avisos de error (credenciales, conexión, intentos, servidor) */
+.ingresar__aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--estado-error);
+  border-radius: var(--radio-l);
+  background: color-mix(in srgb, var(--estado-error) 10%, var(--fondo-superficie));
+}
+.ingresar__aviso > .icono {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--estado-error);
+}
+.ingresar__aviso-cuerpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.ingresar__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+.ingresar__olvido {
+  align-self: flex-end;
+  color: var(--texto-marca);
+}
+.ingresar__acciones > * {
+  width: 100%;
+}
+.ingresar__enviar[aria-disabled="true"],
+.ingresar__aviso .boton[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: progress;
+  box-shadow: none;
+}
+.ingresar__crear {
+  text-align: center;
+  color: var(--texto-secundario);
+}
+.ingresar__enlace {
+  color: var(--texto-marca);
+}
+
+@media (min-width: 64rem) {
+  .ingresar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 40rem;
+  }
+  .ingresar__presentacion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--espacio-4);
+    padding: 3.5rem 3rem;
+    color: var(--texto-inverso);
+    background: var(--fondo-inverso);
+  }
+  .ingresar__temporada {
+    color: var(--marca-acento);
+  }
+  .ingresar__texto {
+    max-width: 28rem;
+  }
+  .ingresar__panel {
+    align-items: center;
+    padding: 3.5rem 3rem;
+  }
+  .ingresar__tarjeta {
+    gap: var(--espacio-5);
+    padding: 2.5rem;
+    border: var(--borde-grosor) solid var(--borde-fuerte);
+    border-radius: var(--radio-xl);
+    background: var(--fondo-superficie);
+    box-shadow: var(--sombra-flotante);
+  }
+}
