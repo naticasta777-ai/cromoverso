@@ -1,11 +1,14 @@
 import { API_URL } from "../config/api.js";
 
 export class ErrorApi extends Error {
-  constructor(estado, codigo) {
+  constructor(estado, codigo, extra = {}) {
     super(codigo);
     this.name = "ErrorApi";
     this.estado = estado;
     this.codigo = codigo;
+    // Mensajes por campo de un 422 y segundos de espera de un 429 (Retry-After).
+    this.campos = extra.campos ?? null;
+    this.reintentarEn = extra.reintentarEn ?? null;
   }
 }
 
@@ -58,13 +61,34 @@ function cabecerasSimulacion() {
   return cabeceras;
 }
 
-export async function pedir(ruta, { signal } = {}) {
+// El token de la sesión vive solo en memoria (nunca en localStorage).
+let tokenSesion = null;
+
+export function fijarToken(token) {
+  tokenSesion = token;
+}
+
+// El catálogo y los textos son públicos: no llevan el token.
+const RUTAS_PUBLICAS = ["/textos", "/mundos", "/cromos", "/rarezas", "/idiomas"];
+
+export async function pedir(ruta, { signal, metodo = "GET", cuerpo } = {}) {
+  const esPublica = RUTAS_PUBLICAS.some((prefijo) => ruta.startsWith(prefijo));
+
   // Los textos de la interfaz nunca se simulan: sin ellos no se vería ningún estado.
   const headers = ruta.startsWith("/textos") ? {} : cabecerasSimulacion();
+  if (tokenSesion && !esPublica) {
+    headers.Authorization = `Bearer ${tokenSesion}`;
+  }
+  if (cuerpo !== undefined) headers["Content-Type"] = "application/json";
 
   let respuesta;
   try {
-    respuesta = await fetch(`${API_URL}${ruta}`, { signal, headers });
+    respuesta = await fetch(`${API_URL}${ruta}`, {
+      method: metodo,
+      signal,
+      headers,
+      body: cuerpo === undefined ? undefined : JSON.stringify(cuerpo),
+    });
   } catch (fallo) {
     if (fallo.name === "AbortError") throw fallo;
     throw new ErrorApi(0, "sin_conexion");
@@ -72,14 +96,21 @@ export async function pedir(ruta, { signal } = {}) {
 
   if (!respuesta.ok) {
     let codigo = "error_interno";
+    let campos = null;
     try {
-      const cuerpo = await respuesta.json();
-      codigo = cuerpo?.error?.codigo ?? codigo;
+      const contenido = await respuesta.json();
+      codigo = contenido?.error?.codigo ?? codigo;
+      campos = contenido?.error?.campos ?? null;
     } catch {
       // El cuerpo del error no era JSON: se conserva el código por defecto.
     }
-    throw new ErrorApi(respuesta.status, codigo);
+    const espera = Number(respuesta.headers.get("Retry-After"));
+    throw new ErrorApi(respuesta.status, codigo, {
+      campos,
+      reintentarEn: Number.isFinite(espera) && espera > 0 ? espera : null,
+    });
   }
 
+  if (respuesta.status === 204) return null;
   return respuesta.json();
 }
