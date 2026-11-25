@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import BarraLateralMundo from "../components/BarraLateralMundo/BarraLateralMundo.jsx";
 import CabeceraMundo from "../components/CabeceraMundo/CabeceraMundo.jsx";
+import { EsqueletoCatalogo } from "../components/Esqueleto/Esqueleto.jsx";
 import EstadoPagina from "../components/EstadoPagina/EstadoPagina.jsx";
 import FiltrosMovil from "../components/FiltrosMovil/FiltrosMovil.jsx";
 import GrillaCromos from "../components/GrillaCromos/GrillaCromos.jsx";
@@ -53,6 +54,10 @@ export default function CatalogoMundo({ idMundo, incrustado = false }) {
   const nombreMundo =
     mundo?.nombre ?? mundos.find((item) => item.id === id)?.nombre;
   const numero = mundos.findIndex((item) => item.id === id) + 1;
+
+  // Mientras no llegan las rarezas todavía no se pidió la lista: sigue «cargando»
+  // y no debe verse el estado vacío por error.
+  const cargandoGrilla = cargandoLista || rarezas.length === 0;
 
   useMetadatos(
     mundo && !incrustado
@@ -122,6 +127,7 @@ export default function CatalogoMundo({ idMundo, incrustado = false }) {
       <LayoutPublico>
         <EstadoPagina
           tipo={error.estado === 0 ? "sinConexion" : "error"}
+          codigo={error.codigo}
           onReintentar={reintentar}
         />
       </LayoutPublico>
@@ -131,7 +137,13 @@ export default function CatalogoMundo({ idMundo, incrustado = false }) {
   if (!mundo) {
     return (
       <LayoutPublico>
-        <EstadoPagina tipo="cargando" mundo={nombreMundo} />
+        <EsqueletoCatalogo
+          texto={
+            nombreMundo
+              ? plantilla(textos.estados.cargandoMundo, { mundo: nombreMundo })
+              : textos.estados.cargando
+          }
+        />
       </LayoutPublico>
     );
   }
@@ -185,8 +197,12 @@ export default function CatalogoMundo({ idMundo, incrustado = false }) {
             cromos={visibles}
             rarezas={rarezas}
             tamano={escritorio ? "m" : "p"}
-            cargando={cargandoLista}
-            resumen={plural(album.filtros.cantidad, visibles.length)}
+            cargando={cargandoGrilla}
+            resumen={
+              cargandoGrilla
+                ? textos.estados.cargando
+                : plural(album.filtros.cantidad, visibles.length)
+            }
             onLimpiar={limpiarFiltros}
           />
         </div>
