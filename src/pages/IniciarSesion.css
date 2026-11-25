@@ -37,7 +37,11 @@
   padding: var(--espacio-3) var(--espacio-4);
   border: var(--borde-grosor) solid var(--estado-error);
   border-radius: var(--radio-l);
-  background: color-mix(in srgb, var(--estado-error) 10%, var(--fondo-superficie));
+  background: color-mix(
+    in srgb,
+    var(--estado-error) 10%,
+    var(--fondo-superficie)
+  );
 }
 .ingresar__aviso > .icono {
   flex-shrink: 0;

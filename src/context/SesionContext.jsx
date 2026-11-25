@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { fijarToken, pedir } from "../api/cliente.js";
 
 const SesionContext = createContext(null);
@@ -35,7 +41,9 @@ export function SesionProvider({ children }) {
     [usuario, ingresar, cerrarSesion],
   );
 
-  return <SesionContext.Provider value={valor}>{children}</SesionContext.Provider>;
+  return (
+    <SesionContext.Provider value={valor}>{children}</SesionContext.Provider>
+  );
 }
 
 export function useSesion() {

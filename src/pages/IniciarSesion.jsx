@@ -40,7 +40,10 @@ export default function IniciarSesion() {
   // Cuenta regresiva del 429 (demasiados intentos).
   useEffect(() => {
     if (espera <= 0) return undefined;
-    const temporizador = setTimeout(() => setEspera((segundos) => segundos - 1), 1000);
+    const temporizador = setTimeout(
+      () => setEspera((segundos) => segundos - 1),
+      1000,
+    );
     return () => clearTimeout(temporizador);
   }, [espera]);
 
@@ -143,15 +146,21 @@ export default function IniciarSesion() {
           <p className="ingresar__temporada detalle-etiqueta">
             {pagina.presentacion.etiquetas.temporada}
           </p>
-          <p className="ingresar__lema titular-h1">{pagina.presentacion.titulo}</p>
-          <p className="ingresar__texto cuerpo-m">{pagina.presentacion.texto}</p>
+          <p className="ingresar__lema titular-h1">
+            {pagina.presentacion.titulo}
+          </p>
+          <p className="ingresar__texto cuerpo-m">
+            {pagina.presentacion.texto}
+          </p>
         </section>
 
         <div className="ingresar__panel">
           <section className="ingresar__tarjeta">
             <div className="ingresar__encabezado">
               <h1 className="titular-h2">{formulario.titulo}</h1>
-              <p className="cuerpo-m ingresar__subtitulo">{formulario.subtitulo}</p>
+              <p className="cuerpo-m ingresar__subtitulo">
+                {formulario.subtitulo}
+              </p>
             </div>
 
             {avisoVisible && (
@@ -174,7 +183,11 @@ export default function IniciarSesion() {
               </div>
             )}
 
-            <form className="ingresar__formulario" onSubmit={alEnviar} noValidate>
+            <form
+              className="ingresar__formulario"
+              onSubmit={alEnviar}
+              noValidate
+            >
               <Campo
                 id={ID_CORREO}
                 etiqueta={formulario.etiquetas.correo}
@@ -186,7 +199,10 @@ export default function IniciarSesion() {
                 value={correo}
                 onChange={(evento) => {
                   setCorreo(evento.target.value);
-                  setCamposError((previo) => ({ ...previo, correo: undefined }));
+                  setCamposError((previo) => ({
+                    ...previo,
+                    correo: undefined,
+                  }));
                 }}
                 error={camposError.correo}
                 aria-required="true"
@@ -208,7 +224,10 @@ export default function IniciarSesion() {
                 aria-required="true"
               />
 
-              <Link to={RUTAS.recuperar} className="ingresar__olvido cuerpo-p-fuerte">
+              <Link
+                to={RUTAS.recuperar}
+                className="ingresar__olvido cuerpo-p-fuerte"
+              >
                 {formulario.enlaces.olvidasteClave}
               </Link>
 
@@ -231,7 +250,10 @@ export default function IniciarSesion() {
 
             <p className="ingresar__crear cuerpo-p">
               {formulario.mensajes.sinCuenta}{" "}
-              <Link to={RUTAS.registro} className="ingresar__enlace cuerpo-p-fuerte">
+              <Link
+                to={RUTAS.registro}
+                className="ingresar__enlace cuerpo-p-fuerte"
+              >
                 {formulario.enlaces.crearCuenta}
               </Link>
             </p>

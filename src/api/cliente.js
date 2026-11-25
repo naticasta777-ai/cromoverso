@@ -69,7 +69,13 @@ export function fijarToken(token) {
 }
 
 // El catálogo y los textos son públicos: no llevan el token.
-const RUTAS_PUBLICAS = ["/textos", "/mundos", "/cromos", "/rarezas", "/idiomas"];
+const RUTAS_PUBLICAS = [
+  "/textos",
+  "/mundos",
+  "/cromos",
+  "/rarezas",
+  "/idiomas",
+];
 
 export async function pedir(ruta, { signal, metodo = "GET", cuerpo } = {}) {
   const esPublica = RUTAS_PUBLICAS.some((prefijo) => ruta.startsWith(prefijo));

@@ -75,7 +75,10 @@ export default function CampoClave({
         </button>
       </div>
       {error && (
-        <p id={idMensaje} className="campo__ayuda campo__ayuda--error detalle-nota">
+        <p
+          id={idMensaje}
+          className="campo__ayuda campo__ayuda--error detalle-nota"
+        >
           <Icono nombre="alerta" />
           {error}
         </p>

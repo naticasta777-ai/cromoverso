@@ -107,11 +107,7 @@ export default function Navbar({
             <>
               <Avatar nombre={usuario.nombre} />
               <div className="navbar__escritorio">
-                <Boton
-                  variante="secundario"
-                  tamano="p"
-                  onClick={cerrarSesion}
-                >
+                <Boton variante="secundario" tamano="p" onClick={cerrarSesion}>
                   {navbar.usuario.cerrarSesion}
                 </Boton>
               </div>
