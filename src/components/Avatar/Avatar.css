@@ -1,0 +1,12 @@
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--borde-grosor) solid var(--marca-borde, var(--borde-fuerte));
+  border-radius: 50%;
+  color: var(--texto-inverso);
+  background: var(--marca-primario);
+  user-select: none;
+}
