@@ -39,16 +39,21 @@ export default function GrillaCromos({
         {cargando ? (
           // Estado de carga: esqueletos con la misma forma de las cartas.
           <ul className="grilla-cromos__lista" aria-hidden="true">
-            {Array.from({ length: Math.max(cromos.length, 10) }, (_, indice) => (
-              <li key={indice}>
-                <EsqueletoCromo />
-              </li>
-            ))}
+            {Array.from(
+              { length: Math.max(cromos.length, 10) },
+              (_, indice) => (
+                <li key={indice}>
+                  <EsqueletoCromo />
+                </li>
+              ),
+            )}
           </ul>
         ) : cromos.length > 0 ? (
           <ul className="grilla-cromos__lista">
             {cromos.map((cromo) => {
-              const rareza = rarezas.find((item) => item.id === cromo.rareza) ?? {
+              const rareza = rarezas.find(
+                (item) => item.id === cromo.rareza,
+              ) ?? {
                 id: cromo.rareza,
                 nombre: cromo.rareza,
               };

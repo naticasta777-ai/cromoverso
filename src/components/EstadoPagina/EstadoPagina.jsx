@@ -55,7 +55,8 @@ export default function EstadoPagina({
       : tipo === "sinConexion"
         ? "wifioff"
         : "alerta";
-  const texto = tipo === "error" ? (errores[codigo] ?? bloque.texto) : bloque.texto;
+  const texto =
+    tipo === "error" ? (errores[codigo] ?? bloque.texto) : bloque.texto;
 
   return (
     <section
@@ -66,11 +67,7 @@ export default function EstadoPagina({
       <h1 className="titular-h2">{bloque.titulo}</h1>
       <p className="cuerpo-m">{texto}</p>
       {tipo === "noEncontrado" ? (
-        <Boton
-          como={Link}
-          to={personalizado?.ruta ?? RUTAS.inicio}
-          tamano="m"
-        >
+        <Boton como={Link} to={personalizado?.ruta ?? RUTAS.inicio} tamano="m">
           {personalizado?.boton ?? estados.noEncontrado.botones.irAlInicio}
         </Boton>
       ) : (
