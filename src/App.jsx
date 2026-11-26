@@ -28,6 +28,7 @@ export default function App() {
         <Route path={RUTAS.ingresar} element={<IniciarSesion />} />
         <Route path={RUTAS.registro} element={<Marcador />} />
         <Route path={RUTAS.recuperar} element={<Marcador />} />
+        <Route path={RUTAS.perfil} element={<Marcador />} />
         <Route path="*" element={<NoEncontrado />} />
       </Routes>
       <GestorCookies />

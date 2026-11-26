@@ -4,6 +4,7 @@ export const RUTAS = {
   ingresar: "/iniciar-sesion",
   registro: "/crear-cuenta",
   recuperar: "/recuperar-clave",
+  perfil: "/perfil",
 };
 
 export const rutaMundo = (id) => `/mundos/${id}`;

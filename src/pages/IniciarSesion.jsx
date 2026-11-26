@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import Boton from "../components/Boton/Boton.jsx";
 import Campo from "../components/Campo/Campo.jsx";
 import CampoClave from "../components/CampoClave/CampoClave.jsx";
@@ -14,7 +14,7 @@ import "./IniciarSesion.css";
 
 const ID_CORREO = "ingresar-correo";
 const ID_CLAVE = "ingresar-clave";
-const CORREO_VALIDO = /^\S+@\S+\.\S+$/;
+const CORREO_VALIDO = /^\S+@\S+\\.\S+$/;
 const ESPERA_POR_DEFECTO = 30;
 
 // Vista 4: iniciar sesión con POST /sesion.
@@ -23,11 +23,21 @@ export default function IniciarSesion() {
   const pagina = textos.paginas.ingresar;
   const { formulario } = pagina;
   const { usuario, ingresar } = useSesion();
+  const ubicacion = useLocation();
 
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
   const [camposError, setCamposError] = useState({});
-  const [aviso, setAviso] = useState(null);
+  // Si llegó porque la sesión venció (SesionContext), se explica qué pasó.
+  const [aviso, setAviso] = useState(() =>
+    ubicacion.state?.vencida
+      ? {
+          tipo: "vencida",
+          titulo: textos.errores.no_autenticado,
+          texto: textos.estados.sinSesion.texto,
+        }
+      : null,
+  );
   const [enviando, setEnviando] = useState(false);
   const [espera, setEspera] = useState(0);
   const control = useRef(null);
@@ -181,7 +191,10 @@ export default function IniciarSesion() {
             </div>
 
             {avisoVisible && (
-              <div className="ingresar__aviso" role="alert">
+              <div
+                className={`ingresar__aviso${avisoVisible.tipo === "vencida" ? " ingresar__aviso--info" : ""}`}
+                role="alert"
+              >
                 <Icono nombre="alerta" />
 
                 <div className="ingresar__aviso-cuerpo">

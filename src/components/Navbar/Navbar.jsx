@@ -5,8 +5,10 @@ import { useAccesibilidad } from "../../context/AccesibilidadContext.jsx";
 import { useSesion } from "../../context/SesionContext.jsx";
 import Avatar from "../Avatar/Avatar.jsx";
 import Boton from "../Boton/Boton.jsx";
+import Esqueleto from "../Esqueleto/Esqueleto.jsx";
 import Icono from "../Icono/Icono.jsx";
 import Marca from "../Marca/Marca.jsx";
+import MenuCuenta from "../MenuCuenta/MenuCuenta.jsx";
 import MenuMovil from "../MenuMovil/MenuMovil.jsx";
 import SelectorIdioma from "../SelectorIdioma/SelectorIdioma.jsx";
 import "./Navbar.css";
@@ -27,7 +29,7 @@ export default function Navbar({
 }) {
   const { navbar, menuMovil } = textos;
   const { abrir: abrirAccesibilidad } = useAccesibilidad();
-  const { usuario, cerrarSesion } = useSesion();
+  const { usuario, verificando, cerrarSesion } = useSesion();
   const [abierto, setAbierto] = useState(false);
   const menu = useRef(null);
   const botonMenu = useRef(null);
@@ -103,14 +105,18 @@ export default function Navbar({
               <Icono nombre="accesibilidad" />
             </button>
           </div>
-          {usuario ? (
+
+          {verificando ? (
+            <Esqueleto className="navbar__cuenta-espera" />
+          ) : usuario ? (
             <>
-              <Avatar nombre={usuario.nombre} />
               <div className="navbar__escritorio">
-                <Boton variante="secundario" tamano="p" onClick={cerrarSesion}>
-                  {navbar.usuario.cerrarSesion}
-                </Boton>
+                <MenuCuenta textos={navbar.usuario} />
               </div>
+              <Avatar
+                nombre={usuario.nombre}
+                className="navbar__avatar-movil"
+              />
             </>
           ) : (
             <>
@@ -134,6 +140,7 @@ export default function Navbar({
               </div>
             </>
           )}
+
           <MenuMovil
             abierto={abierto}
             onAlternar={() => setAbierto((valor) => !valor)}
@@ -162,6 +169,16 @@ export default function Navbar({
             <Icono nombre="cerrar" />
           </button>
         </div>
+
+        {usuario && (
+          <div className="menu-movil__cuenta">
+            <Avatar nombre={usuario.nombre} />
+            <div className="menu-movil__cuenta-datos">
+              <p className="cuerpo-m-fuerte">{usuario.nombre}</p>
+              <p className="cuerpo-p">{usuario.correo}</p>
+            </div>
+          </div>
+        )}
 
         <nav className="menu-movil__enlaces">
           <ul>
@@ -216,16 +233,27 @@ export default function Navbar({
 
         <div className="menu-movil__sesion">
           {usuario ? (
-            <Boton
-              variante="secundario"
-              tamano="m"
-              onClick={() => {
-                cerrar();
-                cerrarSesion();
-              }}
-            >
-              {menuMovil.botones.cerrarSesion}
-            </Boton>
+            <>
+              <Boton
+                como={Link}
+                to={RUTAS.perfil}
+                variante="secundario"
+                tamano="m"
+                onClick={cerrar}
+              >
+                {navbar.usuario.perfil}
+              </Boton>
+              <Boton
+                variante="secundario"
+                tamano="m"
+                onClick={() => {
+                  cerrar();
+                  cerrarSesion();
+                }}
+              >
+                {menuMovil.botones.cerrarSesion}
+              </Boton>
+            </>
           ) : (
             <>
               <Boton
