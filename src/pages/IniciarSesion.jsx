@@ -40,16 +40,19 @@ export default function IniciarSesion() {
   // Cuenta regresiva del 429 (demasiados intentos).
   useEffect(() => {
     if (espera <= 0) return undefined;
+
     const temporizador = setTimeout(
       () => setEspera((segundos) => segundos - 1),
       1000,
     );
+
     return () => clearTimeout(temporizador);
   }, [espera]);
 
   // El aviso de «demasiados intentos» desaparece cuando termina la espera.
   const avisoVisible =
     aviso && (aviso.tipo !== "intentos" || espera > 0) ? aviso : null;
+
   const bloqueado = enviando || espera > 0;
 
   function enfocar(errores) {
@@ -77,11 +80,14 @@ export default function IniciarSesion() {
       });
     } else if (error.estado === 429) {
       const segundos = error.reintentarEn ?? ESPERA_POR_DEFECTO;
+
       setEspera(segundos);
       setAviso({
         tipo: "intentos",
         titulo: pagina.errores.demasiadosIntentos.titulo,
-        texto: plantilla(pagina.errores.demasiadosIntentos.texto, { segundos }),
+        texto: plantilla(pagina.errores.demasiadosIntentos.texto, {
+          segundos,
+        }),
       });
     } else if (error.estado === 0) {
       setAviso({
@@ -105,11 +111,16 @@ export default function IniciarSesion() {
 
     const valorCorreo = correo.trim();
     const errores = {};
-    if (!valorCorreo) errores.correo = pagina.errores.correoObligatorio;
-    else if (!CORREO_VALIDO.test(valorCorreo)) {
+
+    if (!valorCorreo) {
+      errores.correo = pagina.errores.correoObligatorio;
+    } else if (!CORREO_VALIDO.test(valorCorreo)) {
       errores.correo = textos.formularios.validacion.correoInvalido;
     }
-    if (!clave) errores.clave = pagina.errores.claveObligatoria;
+
+    if (!clave) {
+      errores.clave = pagina.errores.claveObligatoria;
+    }
 
     if (errores.correo || errores.clave) {
       mostrarErrorDeCampos(errores);
@@ -122,10 +133,13 @@ export default function IniciarSesion() {
     control.current = new AbortController();
 
     try {
-      await ingresar(valorCorreo, clave, { signal: control.current.signal });
+      await ingresar(valorCorreo, clave, {
+        signal: control.current.signal,
+      });
       // Con la sesión iniciada, esta misma página redirige al inicio (ver abajo).
     } catch (error) {
       if (error.name === "AbortError") return;
+
       mostrarErrorDeApi(error);
       setEnviando(false);
     }
@@ -146,9 +160,11 @@ export default function IniciarSesion() {
           <p className="ingresar__temporada detalle-etiqueta">
             {pagina.presentacion.etiquetas.temporada}
           </p>
+
           <p className="ingresar__lema titular-h1">
             {pagina.presentacion.titulo}
           </p>
+
           <p className="ingresar__texto cuerpo-m">
             {pagina.presentacion.texto}
           </p>
@@ -158,6 +174,7 @@ export default function IniciarSesion() {
           <section className="ingresar__tarjeta">
             <div className="ingresar__encabezado">
               <h1 className="titular-h2">{formulario.titulo}</h1>
+
               <p className="cuerpo-m ingresar__subtitulo">
                 {formulario.subtitulo}
               </p>
@@ -166,9 +183,12 @@ export default function IniciarSesion() {
             {avisoVisible && (
               <div className="ingresar__aviso" role="alert">
                 <Icono nombre="alerta" />
+
                 <div className="ingresar__aviso-cuerpo">
                   <p className="cuerpo-p-fuerte">{avisoVisible.titulo}</p>
+
                   <p className="cuerpo-p">{avisoVisible.texto}</p>
+
                   {avisoVisible.botonReintentar && (
                     <Boton
                       variante="secundario"
@@ -188,64 +208,70 @@ export default function IniciarSesion() {
               onSubmit={alEnviar}
               noValidate
             >
-              <Campo
-                id={ID_CORREO}
-                etiqueta={formulario.etiquetas.correo}
-                type="email"
-                name="correo"
-                autoComplete="email"
-                inputMode="email"
-                placeholder={formulario.placeholders.correo}
-                value={correo}
-                onChange={(evento) => {
-                  setCorreo(evento.target.value);
-                  setCamposError((previo) => ({
-                    ...previo,
-                    correo: undefined,
-                  }));
-                }}
-                error={camposError.correo}
-                aria-required="true"
-              />
+              <fieldset className="ingresar__campos" disabled={espera > 0}>
+                <Campo
+                  id={ID_CORREO}
+                  etiqueta={formulario.etiquetas.correo}
+                  type="email"
+                  name="correo"
+                  autoComplete="email"
+                  inputMode="email"
+                  placeholder={formulario.placeholders.correo}
+                  value={correo}
+                  onChange={(evento) => {
+                    setCorreo(evento.target.value);
+                    setCamposError((previo) => ({
+                      ...previo,
+                      correo: undefined,
+                    }));
+                  }}
+                  error={camposError.correo}
+                  aria-required="true"
+                />
 
-              <CampoClave
-                id={ID_CLAVE}
-                etiqueta={formulario.etiquetas.clave}
-                textoMostrar={formulario.botones.mostrarClave}
-                textoOcultar={formulario.botones.ocultarClave}
-                name="clave"
-                autoComplete="current-password"
-                value={clave}
-                onChange={(evento) => {
-                  setClave(evento.target.value);
-                  setCamposError((previo) => ({ ...previo, clave: undefined }));
-                }}
-                error={camposError.clave}
-                aria-required="true"
-              />
+                <CampoClave
+                  id={ID_CLAVE}
+                  etiqueta={formulario.etiquetas.clave}
+                  textoMostrar={formulario.botones.mostrarClave}
+                  textoOcultar={formulario.botones.ocultarClave}
+                  name="clave"
+                  autoComplete="current-password"
+                  value={clave}
+                  onChange={(evento) => {
+                    setClave(evento.target.value);
+                    setCamposError((previo) => ({
+                      ...previo,
+                      clave: undefined,
+                    }));
+                  }}
+                  error={camposError.clave}
+                  aria-required="true"
+                />
 
-              <Link
-                to={RUTAS.recuperar}
-                className="ingresar__olvido cuerpo-p-fuerte"
-              >
-                {formulario.enlaces.olvidasteClave}
-              </Link>
-
-              <div className="ingresar__acciones">
-                <Boton
-                  type="submit"
-                  tamano="g"
-                  className="ingresar__enviar"
-                  aria-disabled={bloqueado}
+                <Link
+                  to={RUTAS.recuperar}
+                  className="ingresar__olvido cuerpo-p-fuerte"
                 >
-                  {enviando
-                    ? formulario.mensajes.ingresando
-                    : formulario.botones.ingresar}
-                </Boton>
-              </div>
-              <p className="visualmente-oculto" role="status">
-                {enviando ? formulario.mensajes.ingresando : ""}
-              </p>
+                  {formulario.enlaces.olvidasteClave}
+                </Link>
+
+                <div className="ingresar__acciones">
+                  <Boton
+                    type="submit"
+                    tamano="g"
+                    className="ingresar__enviar"
+                    aria-disabled={bloqueado}
+                  >
+                    {enviando
+                      ? formulario.mensajes.ingresando
+                      : formulario.botones.ingresar}
+                  </Boton>
+                </div>
+
+                <p className="visualmente-oculto" role="status">
+                  {enviando ? formulario.mensajes.ingresando : ""}
+                </p>
+              </fieldset>
             </form>
 
             <p className="ingresar__crear cuerpo-p">
