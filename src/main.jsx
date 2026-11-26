@@ -6,6 +6,7 @@ import "./styles/global.css";
 import App from "./App.jsx";
 import { AccesibilidadProvider } from "./context/AccesibilidadContext.jsx";
 import { PreferenciasProvider } from "./context/PreferenciasContext.jsx";
+import { SesionProvider } from "./context/SesionContext.jsx";
 import { TextosProvider } from "./context/TextosContext.jsx";
 import "./styles/accesibilidad.css";
 
@@ -15,7 +16,9 @@ createRoot(document.getElementById("root")).render(
       <PreferenciasProvider>
         <TextosProvider>
           <AccesibilidadProvider>
-            <App />
+            <SesionProvider>
+              <App />
+            </SesionProvider>
           </AccesibilidadProvider>
         </TextosProvider>
       </PreferenciasProvider>

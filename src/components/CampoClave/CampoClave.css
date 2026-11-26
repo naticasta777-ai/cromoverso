@@ -1,0 +1,35 @@
+.campo-clave {
+  position: relative;
+}
+.campo-clave__caja {
+  padding-right: 3.5rem;
+}
+/* Edge dibuja su propio ojo en los campos de contraseña: se oculta para no repetirlo */
+.campo-clave__caja::-ms-reveal,
+.campo-clave__caja::-ms-clear {
+  display: none;
+}
+.campo-clave__ojo {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--texto-secundario);
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.campo-clave__ojo:hover {
+  color: var(--texto-principal);
+  background: var(--marca-primario-suave);
+}
+.campo-clave__ojo svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}

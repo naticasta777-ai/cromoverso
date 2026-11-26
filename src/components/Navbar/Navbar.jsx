@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { RUTAS } from "../../config/rutas.js";
 import { useAccesibilidad } from "../../context/AccesibilidadContext.jsx";
+import { useSesion } from "../../context/SesionContext.jsx";
+import Avatar from "../Avatar/Avatar.jsx";
 import Boton from "../Boton/Boton.jsx";
 import Icono from "../Icono/Icono.jsx";
 import Marca from "../Marca/Marca.jsx";
@@ -25,6 +27,7 @@ export default function Navbar({
 }) {
   const { navbar, menuMovil } = textos;
   const { abrir: abrirAccesibilidad } = useAccesibilidad();
+  const { usuario, cerrarSesion } = useSesion();
   const [abierto, setAbierto] = useState(false);
   const menu = useRef(null);
   const botonMenu = useRef(null);
@@ -100,24 +103,37 @@ export default function Navbar({
               <Icono nombre="accesibilidad" />
             </button>
           </div>
-          <Boton
-            como={Link}
-            to={RUTAS.ingresar}
-            variante="secundario"
-            tamano="p"
-          >
-            {navbar.botones.ingresar}
-          </Boton>
-          <div className="navbar__escritorio">
-            <Boton
-              como={Link}
-              to={RUTAS.registro}
-              variante="primario"
-              tamano="p"
-            >
-              {navbar.botones.crearCuenta}
-            </Boton>
-          </div>
+          {usuario ? (
+            <>
+              <Avatar nombre={usuario.nombre} />
+              <div className="navbar__escritorio">
+                <Boton variante="secundario" tamano="p" onClick={cerrarSesion}>
+                  {navbar.usuario.cerrarSesion}
+                </Boton>
+              </div>
+            </>
+          ) : (
+            <>
+              <Boton
+                como={Link}
+                to={RUTAS.ingresar}
+                variante="secundario"
+                tamano="p"
+              >
+                {navbar.botones.ingresar}
+              </Boton>
+              <div className="navbar__escritorio">
+                <Boton
+                  como={Link}
+                  to={RUTAS.registro}
+                  variante="primario"
+                  tamano="p"
+                >
+                  {navbar.botones.crearCuenta}
+                </Boton>
+              </div>
+            </>
+          )}
           <MenuMovil
             abierto={abierto}
             onAlternar={() => setAbierto((valor) => !valor)}
@@ -199,24 +215,39 @@ export default function Navbar({
         </div>
 
         <div className="menu-movil__sesion">
-          <Boton
-            como={Link}
-            to={RUTAS.ingresar}
-            variante="secundario"
-            tamano="m"
-            onClick={cerrar}
-          >
-            {menuMovil.botones.ingresar}
-          </Boton>
-          <Boton
-            como={Link}
-            to={RUTAS.registro}
-            variante="primario"
-            tamano="m"
-            onClick={cerrar}
-          >
-            {menuMovil.botones.crearCuenta}
-          </Boton>
+          {usuario ? (
+            <Boton
+              variante="secundario"
+              tamano="m"
+              onClick={() => {
+                cerrar();
+                cerrarSesion();
+              }}
+            >
+              {menuMovil.botones.cerrarSesion}
+            </Boton>
+          ) : (
+            <>
+              <Boton
+                como={Link}
+                to={RUTAS.ingresar}
+                variante="secundario"
+                tamano="m"
+                onClick={cerrar}
+              >
+                {menuMovil.botones.ingresar}
+              </Boton>
+              <Boton
+                como={Link}
+                to={RUTAS.registro}
+                variante="primario"
+                tamano="m"
+                onClick={cerrar}
+              >
+                {menuMovil.botones.crearCuenta}
+              </Boton>
+            </>
+          )}
         </div>
       </dialog>
     </header>
