@@ -156,7 +156,9 @@ export function SesionProvider({ children }) {
     [usuario, verificando, ingresar, cerrarSesion],
   );
 
-  return <SesionContext.Provider value={valor}>{children}</SesionContext.Provider>;
+  return (
+    <SesionContext.Provider value={valor}>{children}</SesionContext.Provider>
+  );
 }
 
 export function useSesion() {
