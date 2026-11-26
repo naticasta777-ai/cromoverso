@@ -61,28 +61,32 @@ function cabecerasSimulacion() {
   return cabeceras;
 }
 
-// El token de la sesión vive solo en memoria (nunca en localStorage).
+// La cookie httpOnly «sesion» viaja sola cuando la API se pide por la misma dirección
+// del sitio (/api/v1). Solo si se usa una dirección completa de otro origen se manda
+// el token (guardado únicamente en memoria) en la cabecera Authorization.
+const MISMO_ORIGEN = API_URL.startsWith("/");
 let tokenSesion = null;
 
 export function fijarToken(token) {
   tokenSesion = token;
 }
 
+// Quien administra la sesión (SesionContext) avisa aquí qué hacer si vence.
+let alVencerLaSesion = null;
+
+export function registrarSesionVencida(manejador) {
+  alVencerLaSesion = manejador;
+}
+
 // El catálogo y los textos son públicos: no llevan el token.
-const RUTAS_PUBLICAS = [
-  "/textos",
-  "/mundos",
-  "/cromos",
-  "/rarezas",
-  "/idiomas",
-];
+const RUTAS_PUBLICAS = ["/textos", "/mundos", "/cromos", "/rarezas", "/idiomas"];
 
 export async function pedir(ruta, { signal, metodo = "GET", cuerpo } = {}) {
   const esPublica = RUTAS_PUBLICAS.some((prefijo) => ruta.startsWith(prefijo));
 
   // Los textos de la interfaz nunca se simulan: sin ellos no se vería ningún estado.
   const headers = ruta.startsWith("/textos") ? {} : cabecerasSimulacion();
-  if (tokenSesion && !esPublica) {
+  if (tokenSesion && !esPublica && !MISMO_ORIGEN) {
     headers.Authorization = `Bearer ${tokenSesion}`;
   }
   if (cuerpo !== undefined) headers["Content-Type"] = "application/json";
@@ -111,6 +115,17 @@ export async function pedir(ruta, { signal, metodo = "GET", cuerpo } = {}) {
       // El cuerpo del error no era JSON: se conserva el código por defecto.
     }
     const espera = Number(respuesta.headers.get("Retry-After"));
+
+    // Sesión vencida: cualquier petición que pida sesión y reciba 401 no_autenticado.
+    // Las de /sesion se manejan en SesionContext (ahí un 401 es lo normal sin sesión).
+    if (
+      respuesta.status === 401 &&
+      codigo === "no_autenticado" &&
+      !ruta.startsWith("/sesion")
+    ) {
+      alVencerLaSesion?.();
+    }
+
     throw new ErrorApi(respuesta.status, codigo, {
       campos,
       reintentarEn: Number.isFinite(espera) && espera > 0 ? espera : null,

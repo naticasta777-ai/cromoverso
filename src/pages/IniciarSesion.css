@@ -130,3 +130,12 @@
 .ingresar__campos:disabled {
   opacity: 0.6;
 }
+
+/* Aviso informativo (la sesión venció): no es un error del formulario */
+.ingresar__aviso--info {
+  border-color: var(--marca-primario);
+  background: var(--marca-primario-suave);
+}
+.ingresar__aviso--info > .icono {
+  color: var(--marca-primario);
+}
